@@ -23,7 +23,6 @@
 hs_err_pid*
 
 # Specific folders
-*.properties
 Code/target/
 /Code/target/
-application.properties
+/application.properties
