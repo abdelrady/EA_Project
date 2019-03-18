@@ -1,5 +1,6 @@
 package edu.mum.main;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -26,13 +27,13 @@ public class Main {
 	@Autowired
 	UserService userService;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws BeansException, Exception {
 
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("context/applicationContext.xml");
 		applicationContext.getBean(Main.class).mainInternal(applicationContext);
 	}
 
-	private void mainInternal(ApplicationContext applicationContext) {
+	private void mainInternal(ApplicationContext applicationContext) throws Exception {
 
 		testUsers.setupUsers();
 		testItems.setupItems();
