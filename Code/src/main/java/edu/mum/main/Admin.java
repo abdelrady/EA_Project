@@ -27,7 +27,7 @@ public class Admin {
 	AdminService adminService;
 
 	
-	public void adminActions() {
+	public void adminActions()  {
 		
 
 		int key=0;

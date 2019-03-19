@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 import edu.mum.domain.Category;
 import edu.mum.domain.Item;
 import edu.mum.domain.User;
+import edu.mum.domain.UserCredentials;
 import edu.mum.main.TestUsers;
+
 @Component
 public class AdminService {
 
@@ -25,10 +27,40 @@ public class AdminService {
 
 	@Autowired
 	TestUsers testUsers;
-	
-	public void InitialData() {
 
-		testUsers.setupUsers();
+	@Autowired
+	UserCredentialsService userCredentialsService;
+
+	public void InitialData(){
+
+		User user = new User();
+		user.setFirstName("Wael");
+		user.setLastName("Rezk");
+		user.setEmail("wrezk@mum.com");
+		userService.save(user);
+
+		UserCredentials userCredentials = new UserCredentials();
+		userCredentials.setUserName("wrezk");
+		userCredentials.setPassword("wrezk");
+		userCredentials.setVerifyPassword("wrezk");
+
+		userCredentials.setUser(user);
+		user.setUserCredentials(userCredentials);
+
+	    user = new User();
+		user.setFirstName("Ahmed");
+		user.setLastName("Said");
+		user.setEmail("Asaid@abc.com");
+		userService.save(user);
+
+		userCredentials.setUserName("Asaid");
+		userCredentials.setPassword("Asaid");
+		userCredentials.setVerifyPassword("Asaid");
+
+		userCredentials.setUser(user);
+		user.setUserCredentials(userCredentials);
+
+
 		Category categorySports = new Category("Sports");
 		categoryService.save(categorySports);
 		Category categoryToys = new Category("Toys");
@@ -36,8 +68,8 @@ public class AdminService {
 		Category categoryGifts = new Category("Gifts");
 		categoryService.save(categoryGifts);
 
-		User buyer = userService.findOne(2L); // "Jane Doe"
-		User seller = userService.findOne(1L); // John Doe
+		User buyer = userService.findOne(2L); 
+		User seller = userService.findOne(1L);
 		System.out.println(buyer.getFirstName());
 		System.out.println(seller.getFirstName());
 
@@ -52,9 +84,7 @@ public class AdminService {
 		itemSled.setSeller(seller);
 		itemService.update(itemSled);
 
-		// Second itemSkates
-
-		// NEVER will be found by findItemsBySellOrBuy
+		// Second item
 
 		Item itemSkates = new Item();
 		itemSkates.setName("Skates");
@@ -73,7 +103,6 @@ public class AdminService {
 		itemSkates = itemService.update(itemSkates);
 
 		// Buyer & Reserve = initial will be found by findItemsBySellOrBuy based on
-		// buyer...
 		Item itemShoes = new Item();
 		itemShoes.setName("Shoes");
 		itemShoes.setDescription("Snug Fit");
@@ -121,19 +150,17 @@ public class AdminService {
 //		newItem.addCategory(sc.nextInt());
 //		System.out.println("Item Seller : ");
 //		newItem.setSeller(sc.nextInt());
-		
+
 		itemService.update(newItem);
 
 	}
-	
-	
+
 	public void listAllItems() {
- 		 
-		List<Item> items=itemService.findAll();
+
+		List<Item> items = itemService.findAll();
 		for (Item item : items) {
 			System.out.println(item.toString());
 		}
 	}
-	
-	
+
 }

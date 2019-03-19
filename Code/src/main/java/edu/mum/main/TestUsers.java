@@ -17,7 +17,7 @@ public class TestUsers {
 	UserCredentialsService userCredentialsService;
 	
 
- public void setupUsers() throws Exception {
+ public void setupUsers() {
 	 
 	//Add 2 users for JPQL testing 
 	 

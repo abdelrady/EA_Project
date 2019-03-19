@@ -2,6 +2,7 @@ package edu.mum.main;
 
 import java.util.Scanner;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -30,10 +31,9 @@ public class Main {
 		applicationContext.getBean(Main.class).mainInternal(applicationContext);
 	}
 
-	private void mainInternal(ApplicationContext applicationContext) {
+	private void mainInternal(ApplicationContext applicationContext)  {
 		int key = 0;
 
-		testUsers.setupUsers();
 		admin.adminActions();
 	}
 
