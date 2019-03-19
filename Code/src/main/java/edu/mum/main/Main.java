@@ -57,10 +57,10 @@ String password="";
 		
 		if(authService.Login(username,password))
 				{
-					
+			admin.adminActions();
 				}
 		
-		//admin.adminActions();
+		
 	}
 
 }
