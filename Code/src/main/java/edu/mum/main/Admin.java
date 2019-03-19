@@ -38,6 +38,7 @@ public class Admin {
 			System.out.println("[3] Add Category");
 			System.out.println("[4] AddItem");
 			System.out.println("[5] Update Category Name");
+			System.out.println("[6] Import Product from CSV file");
 			Scanner sc = new Scanner(System.in);
 			key = sc.nextInt();
 			switch (key) {
@@ -66,11 +67,9 @@ public class Admin {
 				adminService.AddItems();
 
 				break;
-//			case 4:
-//
-//				adminService.AddItems();
-//
-//				break;
+			case 6://run batch
+				adminService.runBatch();
+				break;
 
 			default:
 				break;
