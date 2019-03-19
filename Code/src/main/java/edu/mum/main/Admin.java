@@ -5,10 +5,10 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import edu.mum.service.AdminService;
 import edu.mum.service.CategoryService;
 import edu.mum.service.ItemService;
 import edu.mum.service.UserService;
+import edu.mum.service.impl.AdminServiceImpl;
 
 @Component
 public class Admin {
@@ -24,7 +24,7 @@ public class Admin {
 	
 
 	@Autowired
-	AdminService adminService;
+	AdminServiceImpl adminService;
 
 	
 	public void adminActions()  {
@@ -61,11 +61,11 @@ public class Admin {
 				adminService.updateCategoryName();
 
 				break;
-//			case 4:
-//
-//				adminService.AddItems();
-//
-//				break;
+			case 4:
+
+				adminService.AddItems();
+
+				break;
 //			case 4:
 //
 //				adminService.AddItems();

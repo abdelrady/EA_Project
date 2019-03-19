@@ -67,8 +67,8 @@ public class User implements Serializable {
 	@Column
 	Boolean disabled;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	//@JoinColumn(name = "userId")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "authority_id", nullable=false)
 	private Authority authority;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "owner")

@@ -1,4 +1,4 @@
-package edu.mum.service;
+package edu.mum.service.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -7,19 +7,27 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import edu.mum.domain.Authority;
 import edu.mum.domain.Category;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.main.TestUsers;
+import edu.mum.service.AuthService;
+import edu.mum.service.CategoryService;
+import edu.mum.service.ItemService;
+import edu.mum.service.UserService;
 
 @Component
-public class AdminService {
+public class AdminServiceImpl {
 
 	@Autowired
 	ItemService itemService;
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	AuthService authService;
 
 	@Autowired
 	CategoryService categoryService;
@@ -29,13 +37,19 @@ public class AdminService {
 
 	public void InitialData(){
 
+		Authority admin = new Authority("Admin");
+		Authority customer = new Authority("Customer");
+		
+		authService.save(admin);
+		authService.save(customer);
+		
 		User user = new User();
 		user.setFirstName("Wael");
 		user.setLastName("Rezk");
 		user.setEmail("wrezk@mum.com");
 		user.setUserName("wrezk");
 		user.setPassword("wrezk");
-		
+		user.setAuthority(admin);
 		userService.save(user);
 
 	    user = new User();
@@ -44,7 +58,8 @@ public class AdminService {
 		user.setEmail("Asaid@abc.com");
 		user.setUserName("Asaid");
 		user.setPassword("Asaid");
-
+		user.setAuthority(customer);
+		
 		userService.save(user);
 
 
