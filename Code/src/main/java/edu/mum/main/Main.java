@@ -1,30 +1,28 @@
 package edu.mum.main;
 
+import java.util.Scanner;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import edu.mum.domain.User;
-import edu.mum.service.UserService;
+import edu.mum.service.AdminService;
 
 @Component
 public class Main {
 
 	@Autowired
-	TestItemCategory testItemCategory;
-
-	@Autowired
 	TestUsers testUsers;
-
+	
 	@Autowired
 	TestItems testItems;
-
+	
+	@Autowired	
+	Admin admin;
+	
 	@Autowired
-	TestFindItemsBySellOrBuy testFindItemsBySellOrBuy;
-
-	@Autowired
-	UserService userService;
+	AdminService adminService;
 
 	public static void main(String[] args) {
 
@@ -33,16 +31,10 @@ public class Main {
 	}
 
 	private void mainInternal(ApplicationContext applicationContext) {
+		int key = 0;
 
 		testUsers.setupUsers();
-		testItems.setupItems();
-
-		// Named Query
-		testItemCategory.testItemCategory();
-
-		// JPQL - Criteria Query
-		testFindItemsBySellOrBuy.test();
-
+		admin.adminActions();
 	}
 
 }
