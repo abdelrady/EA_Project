@@ -11,4 +11,5 @@ public interface AuthService {
 	public List<Authority> findAll();
 	public Authority findOne(Long id);
 	public Authority update(Authority user);
+	public boolean Login(String username,String password);
 }
