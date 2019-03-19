@@ -18,12 +18,12 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	private UserDao userDao;
 
  	
-     public void save( User user) {  		
-  		userDao.save(user);
+     public void save( User user) {
+    	userDao.save(user);
  	}
   	
   	
-	public List<User> findAll() {
+	public List<User> findAll(){
 		return (List<User>)userDao.findAll();
 	}
 

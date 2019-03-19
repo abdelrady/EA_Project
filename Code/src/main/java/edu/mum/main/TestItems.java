@@ -17,76 +17,80 @@ public class TestItems {
 
 	@Autowired
 	ItemService itemService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	CategoryService categoryService;
 
-	
 	public void setupItems() {
-		
-		   Category categorySports = new Category("Sports");	    
+
+		Category categorySports = new Category("Sports");
 		categoryService.save(categorySports);
-		   Category categoryToys = new Category("Toys");
-			categoryService.save(categoryToys);
-		    Category categoryGifts = new Category("Gifts");
-			categoryService.save(categoryGifts);
- 
-		    User buyer = userService.findOne(2L); // "Jane Doe"
-		    User seller = userService.findOne(1L);  // John Doe
+		Category categoryToys = new Category("Toys");
+		categoryService.save(categoryToys);
+		Category categoryGifts = new Category("Gifts");
+		categoryService.save(categoryGifts);
 
-	 	    //  Seller initial > 22 will be found by findItemsBySellOrBuy based on initialPrice...
+		User buyer = userService.findOne(2L); // "Jane Doe"
+		User seller = userService.findOne(1L); // John Doe
 
-		    Item itemSled = new Item();
-		    itemSled.setName("Sled");
-		    itemSled.setDescription("Winter time fun");
-		    itemSled.setInitialPrice(new BigDecimal(28.0));
-		    itemSled.setReservePrice(new BigDecimal(32.0));
+		// Seller initial > 22 will be found by findItemsBySellOrBuy based on
+		// initialPrice...
 
-		    itemSled.addCategory(categoryToys);
-		    itemSled.addCategory(categorySports);
-		    
-		    itemSled.setSeller(seller);
+		Item itemSled = new Item();
+		itemSled.setName("Sled");
+		itemSled.setDescription("Winter time fun");
+		itemSled.setInitialPrice(new BigDecimal(28.0));
+		itemSled.setReservePrice(new BigDecimal(32.0));
 
-		    itemService.update(itemSled);
-		    
+		itemSled.addCategory(categoryToys);
+		itemSled.addCategory(categorySports);
+
+		itemSled.setSeller(seller);
+
+		itemService.update(itemSled);
+
 		// Second itemSkates
-		    
-		    // NEVER will be found  by findItemsBySellOrBuy
 
-		    Item itemSkates = new Item();
-		    itemSkates.setName("Skates");
-		    itemSkates.setDescription("Winter time gliding");
-		    itemSkates.setReservePrice(new BigDecimal(26.0));
-		    itemSkates.setInitialPrice(new BigDecimal(22.0));
+		// NEVER will be found by findItemsBySellOrBuy
 
-		    // Reload categories from db
-		    categoryToys = categoryService.findOne(categoryToys.getId());
-		    categorySports = categoryService.findOne(categorySports.getId());
-		    
-		    itemSkates.addCategory(categoryToys);
-		    itemSkates.addCategory(categorySports);
- 		    
-		    // Need to merge .. to handle detached categories....
-		    itemSkates =  itemService.update(itemSkates);
-		    
-		    
-		    //  Buyer & Reserve = initial will be found by findItemsBySellOrBuy based on buyer...
-		    Item itemShoes = new Item();
-		    itemShoes.setName("Shoes");
-		    itemShoes.setDescription("Snug Fit");
-		    itemShoes.setReservePrice(new BigDecimal(18.0));
-		    itemShoes.setInitialPrice(new BigDecimal(18.0));
+		Item itemSkates = new Item();
+		itemSkates.setName("Skates");
+		itemSkates.setDescription("Winter time gliding");
+		itemSkates.setReservePrice(new BigDecimal(26.0));
+		itemSkates.setInitialPrice(new BigDecimal(22.0));
 
-		    itemShoes.addCategory(categoryGifts);
- 		
-		    buyer.addBoughtItem(itemShoes);
- 		    userService.update(buyer);
- 		    
- 		    userService.findAll();
- 
+		// Reload categories from db
+		categoryToys = categoryService.findOne(categoryToys.getId());
+		categorySports = categoryService.findOne(categorySports.getId());
+
+		itemSkates.addCategory(categoryToys);
+		itemSkates.addCategory(categorySports);
+
+		// Need to merge .. to handle detached categories....
+		itemSkates = itemService.update(itemSkates);
+
+		// Buyer & Reserve = initial will be found by findItemsBySellOrBuy based on
+		// buyer...
+		Item itemShoes = new Item();
+		itemShoes.setName("Shoes");
+		itemShoes.setDescription("Snug Fit");
+		itemShoes.setReservePrice(new BigDecimal(18.0));
+		itemShoes.setInitialPrice(new BigDecimal(18.0));
+
+		itemShoes.addCategory(categoryGifts);
+
+		buyer.addBoughtItem(itemShoes);
+		userService.update(buyer);
+
+		try {
+			userService.findAll();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }
