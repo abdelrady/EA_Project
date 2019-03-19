@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import edu.mum.domain.*;
 import edu.mum.service.impl.AdminServiceImpl;
+import edu.mum.service.impl.AuthServiceImpl;
 
 @Component
 public class Main {
@@ -28,6 +29,9 @@ public class Main {
 	
 	@Autowired
 	AdminServiceImpl adminService;
+	
+	@Autowired
+	AuthServiceImpl authService;
 
 	public static void main(String[] args) {
 
@@ -37,8 +41,26 @@ public class Main {
 
 	private void mainInternal(ApplicationContext applicationContext)  {
 		int key = 0;
-
-		admin.adminActions();
+String username="";
+String password="";
+		System.out.println("Welcome to SpringArrival!");
+		System.out.println("Please enter you credentials");
+		System.out.print("User name:");
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
+		username = sc.next();
+		System.out.print("Password:");
+		 sc = new Scanner(System.in);
+		password = sc.next();
+		
+		System.out.print(username+password);
+		
+		if(authService.Login(username,password))
+				{
+			admin.adminActions();
+				}
+		
+		
 	}
 
 }
