@@ -7,6 +7,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import edu.mum.batch.ProductBatch;
 import edu.mum.domain.Authority;
 import edu.mum.domain.Category;
 import edu.mum.domain.Product;
@@ -34,6 +35,9 @@ public class AdminServiceImpl {
 
 	@Autowired
 	TestUsers testUsers;
+	
+	@Autowired
+	ProductBatch productBatch;
 
 	public void InitialData(){
 
@@ -151,6 +155,15 @@ public class AdminServiceImpl {
 
 	}
 
+	
+	public void runBatch() {
+		try {
+			productBatch.startjob();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void listAllItems() {
 
 		List<Product> items = itemService.findAll();
