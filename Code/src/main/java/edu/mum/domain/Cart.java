@@ -1,0 +1,22 @@
+package edu.mum.domain;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+public class Cart {
+	private Long id = null;
+	
+	private User owner;
+	
+	private List<OrderItem> orderItems = new ArrayList<OrderItem>();
+
+	private BigDecimal totalPrice;
+	
+}

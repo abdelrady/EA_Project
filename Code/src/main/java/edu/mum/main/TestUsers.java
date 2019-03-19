@@ -3,8 +3,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import edu.mum.domain.User;
-import edu.mum.domain.UserCredentials;
-import edu.mum.service.UserCredentialsService;
 import edu.mum.service.UserService;
 
 @Component
@@ -13,8 +11,6 @@ public class TestUsers {
 	@Autowired
 	UserService userService;
 	
-	@Autowired
-	UserCredentialsService userCredentialsService;
 	
 
  public void setupUsers() {
@@ -25,18 +21,19 @@ public class TestUsers {
    user.setFirstName("John");
    user.setLastName("Doe");
    user.setEmail("john@Doe.com");
+   //user.setUserName("JohnDoe");
+   //user.setPassword("DoeNuts");
+   
    userService.save(user);
    
-   UserCredentials userCredentials = new UserCredentials();
-   userCredentials.setUserName("JohnDoe");
-   userCredentials.setPassword("DoeNuts");
-   userCredentials.setVerifyPassword("DoeNuts");
+   //UserCredentials userCredentials = new UserCredentials();
+   //userCredentials.setVerifyPassword("DoeNuts");
 
    // Set both sides
-   userCredentials.setUser(user);
-   user.setUserCredentials(userCredentials);
+   //userCredentials.setUser(user);
+   //user.setUserCredentials(userCredentials);
    
-   userCredentialsService.update(userCredentials);
+   //userCredentialsService.update(userCredentials);
    
     
    // Add second for JPQL testing

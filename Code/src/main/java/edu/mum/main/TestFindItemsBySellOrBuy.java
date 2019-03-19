@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import edu.mum.domain.Item;
+import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.service.ItemService;
 import edu.mum.service.UserService;
@@ -34,13 +34,13 @@ public class TestFindItemsBySellOrBuy{
 //	    List<Item> items = itemService.findBySellerOrBuyer(22, buyer,seller);	 // Sled & Shoes
 
 	    // Test Criteria query
-	    List<Item> items = itemService.findItemCriteria(null,buyer,null);    // Shoes  
+	    List<Product> items = itemService.findItemCriteria(null,buyer,null);    // Shoes  
 //	    List<Item> items = itemService.findItemCriteria(22,null,seller);   //Sled 
 //	    List<Item> items = itemService.findItemCriteria(22,buyer,seller);  // Sled & Shoes
 
 
 	 	   System.out.println();
-	    for (Item itemFound : items) {
+	    for (Product itemFound : items) {
 		    System.out.println("Item Name : " + itemFound.getName());
 	    }
 	    

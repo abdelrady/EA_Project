@@ -1,4 +1,4 @@
-		package edu.mum.domain;
+package edu.mum.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,44 +23,56 @@ import javax.persistence.Version;
 
 @Entity
 @Table(name = "USERS")
- public class User implements Serializable  {
+public class User implements Serializable {
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "USER_ID")
-    private Long id = null;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "USER_ID")
+	private Long id = null;
 
-    @Version
-    private int version = 0;
+	@Column(name = "FIRSTNAME", nullable = false)
+	private String firstName;
 
-    
-     @Column(name = "FIRSTNAME", nullable = false)
-    private String firstName;
+	@Column(name = "LASTNAME", nullable = false)
+	private String lastName;
 
-    @Column(name = "LASTNAME", nullable = false)
-    private String lastName;
+	@Column(name = "EMAIL", nullable = false)
+	private String email;
 
-    @Column(name = "EMAIL", nullable = false)
-    private String email;
+	@Column(name = "IS_ADMIN", nullable = false)
+	private boolean admin = false;
 
-    @Column(name = "RATING", nullable = false)
-    private int ranking = 0;
+	@Column(nullable = false)
+	String userName;
+	
+	public String getUserName() {
+		return userName;
+	}
 
-    @Column(name = "IS_ADMIN", nullable = false)
-    private boolean admin = false;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-	@OneToOne(fetch=FetchType.LAZY,  cascade = CascadeType.ALL) 
-	@JoinColumn(name="userId") 
-	private UserCredentials userCredentials;
+	@Column(name = "PASSWORD", nullable = false, length = 32)
+	String password;
 
-	   @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy="user")
-	     private Set<Address> addresses = new HashSet<Address>();
+	public String getPassword() {
+		return password;
+	}
 
-/*	   @OneToMany(mappedBy = "seller")
-	    private Collection<Item> itemsForSale = new ArrayList<Item>();
-*/
-	    @OneToMany(fetch=FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-	    private Set<Item> boughtItems = new HashSet<Item>();
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
+	@Column
+	Boolean disabled;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	//@JoinColumn(name = "userId")
+	private Authority authority;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "owner")
+	private Set<Order> orders = new HashSet<Order>();
 
 	public Long getId() {
 		return id;
@@ -93,14 +106,6 @@ import javax.persistence.Version;
 		this.email = email;
 	}
 
-	public int getRanking() {
-		return ranking;
-	}
-
-	public void setRanking(int ranking) {
-		this.ranking = ranking;
-	}
-
 	public boolean isAdmin() {
 		return admin;
 	}
@@ -109,32 +114,26 @@ import javax.persistence.Version;
 		this.admin = admin;
 	}
 
-	public UserCredentials getUserCredentials() {
-		return userCredentials;
+	public Authority getAuthority() {
+		return authority;
 	}
-
-	public void setUserCredentials(UserCredentials userCredentials) {
-		this.userCredentials = userCredentials;
-	}
-
-	public Set<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(Set<Address> addresses) {
-		this.addresses = addresses;
-	}
-
-	public Set<Item> getBoughtItems() {
-		return boughtItems;
-	}
-
-	public void setBoughtItems(Set<Item> boughtItems) {
-		this.boughtItems = boughtItems;
+	public void setAuthority(Authority authority) {
+		this.authority = authority;
 	}
 	
-	public void addBoughtItem(Item boughtItem) {
-		this.boughtItems.add(boughtItem);
+	public Boolean getDisabled() {
+		return disabled;
+	}
+	public void setDisabled(Boolean disabled) {
+		this.disabled = disabled;
+	}
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
 	}
 
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import edu.mum.domain.Category;
-import edu.mum.domain.Item;
+import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.service.CategoryService;
 import edu.mum.service.ItemService;
@@ -39,28 +39,25 @@ public class TestItems {
 		// Seller initial > 22 will be found by findItemsBySellOrBuy based on
 		// initialPrice...
 
-		Item itemSled = new Item();
+		Product itemSled = new Product();
 		itemSled.setName("Sled");
 		itemSled.setDescription("Winter time fun");
-		itemSled.setInitialPrice(new BigDecimal(28.0));
-		itemSled.setReservePrice(new BigDecimal(32.0));
+		itemSled.setPrice(new BigDecimal(28.0));
 
 		itemSled.addCategory(categoryToys);
 		itemSled.addCategory(categorySports);
 
-		itemSled.setSeller(seller);
-
+		
 		itemService.update(itemSled);
 
 		// Second itemSkates
 
 		// NEVER will be found by findItemsBySellOrBuy
 
-		Item itemSkates = new Item();
+		Product itemSkates = new Product();
 		itemSkates.setName("Skates");
 		itemSkates.setDescription("Winter time gliding");
-		itemSkates.setReservePrice(new BigDecimal(26.0));
-		itemSkates.setInitialPrice(new BigDecimal(22.0));
+		itemSkates.setPrice(new BigDecimal(26.0));
 
 		// Reload categories from db
 		categoryToys = categoryService.findOne(categoryToys.getId());
@@ -74,15 +71,14 @@ public class TestItems {
 
 		// Buyer & Reserve = initial will be found by findItemsBySellOrBuy based on
 		// buyer...
-		Item itemShoes = new Item();
+		Product itemShoes = new Product();
 		itemShoes.setName("Shoes");
 		itemShoes.setDescription("Snug Fit");
-		itemShoes.setReservePrice(new BigDecimal(18.0));
-		itemShoes.setInitialPrice(new BigDecimal(18.0));
+		itemShoes.setPrice(new BigDecimal(18.0));
 
 		itemShoes.addCategory(categoryGifts);
 
-		buyer.addBoughtItem(itemShoes);
+		//buyer.addBoughtItem(itemShoes);
 		userService.update(buyer);
 
 		try {

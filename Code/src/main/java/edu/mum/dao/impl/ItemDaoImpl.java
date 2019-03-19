@@ -15,27 +15,27 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 import edu.mum.dao.ItemDao;
-import edu.mum.domain.Item;
+import edu.mum.domain.Product;
 import edu.mum.domain.User;
 
 @SuppressWarnings("unchecked")
 @Repository
-public class ItemDaoImpl extends GenericDaoImpl<Item> implements ItemDao {
+public class ItemDaoImpl extends GenericDaoImpl<Product> implements ItemDao {
 
 	public ItemDaoImpl() {
-		super.setDaoType(Item.class);
+		super.setDaoType(Product.class);
 	}
 
-	public List<Item> findByCategoryName(String categoryName) {
+	public List<Product> findByCategoryName(String categoryName) {
 
 		// TODO Replace this find ALL query with a NAMED query to find by category name
 		// Query query = entityManager.createQuery("from Item");
 		Query query = entityManager.createNamedQuery("Item.findByCategoryName");
 query.setParameter("name", categoryName);
-		return (List<Item>) query.getResultList();
+		return (List<Product>) query.getResultList();
 	}
 
-	public List<Item> findBySellerOrBuyer(Integer initialPrice, User buyer, User seller) {
+	public List<Product> findBySellerOrBuyer(Integer initialPrice, User buyer, User seller) {
 		BigDecimal price = new BigDecimal(initialPrice);
 		String sellerPrice = "";
 		String buyerPrice = "";
@@ -59,15 +59,15 @@ query.setParameter("name", categoryName);
 		if (buyer != null)
 			query.setParameter("buyer", buyer);
 
-		return (List<Item>) query.getResultList();
+		return (List<Product>) query.getResultList();
 	}
 
-	public List<Item> findItemCriteria(Integer initialPrice, User buyer, User seller) {
+	public List<Product> findItemCriteria(Integer initialPrice, User buyer, User seller) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		// Typed query - expected results are of the type Item
-		CriteriaQuery<Item> query = criteriaBuilder.createQuery(Item.class);
+		CriteriaQuery<Product> query = criteriaBuilder.createQuery(Product.class);
 		// From part of the clause
-		Root<Item> itemRoot = query.from(Item.class);
+		Root<Product> itemRoot = query.from(Product.class);
 		// The Select
 		query.select(itemRoot).distinct(true);
 
@@ -91,7 +91,7 @@ query.setParameter("name", categoryName);
 			Predicate buyerPredicate = criteriaBuilder.equal(userRoot, buyer);
 
 			// get items: item is member of user.boughtItems
-			Expression<Set<Item>> items = userRoot.get("boughtItems");
+			Expression<Set<Product>> items = userRoot.get("boughtItems");
 			Predicate memberOf = criteriaBuilder.isMember(itemRoot, items);
 
 			// Combine...
@@ -110,7 +110,7 @@ query.setParameter("name", categoryName);
 		predicateList.toArray(predicates);
 		query.where(criteriaBuilder.or(predicates));
 
-		List<Item> items = (List<Item>) entityManager.createQuery(query).getResultList();
+		List<Product> items = (List<Product>) entityManager.createQuery(query).getResultList();
 		return items;
 	}
 }

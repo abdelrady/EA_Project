@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.dao.GenericDao;
 import edu.mum.dao.ItemDao;
-import edu.mum.domain.Item;
+import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.service.ItemService;
 
@@ -20,36 +20,36 @@ public class ItemServiceImpl implements ItemService {
  	@Autowired
 	private ItemDao itemDao;
 
-    public void save( Item Item) {  		
+    public void save( Product Item) {  		
 		itemDao.save(Item);
 	}
 	
 	
-    public Item update( Item Item) {  		
+    public Product update( Product Item) {  		
 		return itemDao.update(Item);
 	}
 	
 	
-	public List<Item> findAll() {
-		return (List<Item>)itemDao.findAll();
+	public List<Product> findAll() {
+		return (List<Product>)itemDao.findAll();
 	}
 
- 	public Item findOne(Long id) {
+ 	public Product findOne(Long id) {
 		return itemDao.findOne(id);
 	}
 
 
 	@Override
-	public List<Item> findBySellerOrBuyer(Integer price, User buyer, User seller) {
+	public List<Product> findBySellerOrBuyer(Integer price, User buyer, User seller) {
 		 
 		return itemDao.findBySellerOrBuyer(price, buyer, seller);
 	}
 
-	public List<Item> findByCategoryName(String categoryName) {
+	public List<Product> findByCategoryName(String categoryName) {
 		return itemDao.findByCategoryName(categoryName);
 	}
 	
-	public List<Item> findItemCriteria(Integer initialPrice, User buyer, User seller) {
+	public List<Product> findItemCriteria(Integer initialPrice, User buyer, User seller) {
 		return itemDao.findItemCriteria(initialPrice,buyer,seller);
 	}
 }
