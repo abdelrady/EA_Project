@@ -8,14 +8,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import edu.mum.domain.Cart;
 
 public class CartServiceImpl  {
-	private Map<String, Cart> usersCarts = new HashMap<>();
+	private static Map<String, Cart>  usersCarts = new HashMap<>();
 
 	private CartServiceImpl() {
 
 	}
 
 	@PreAuthorize("hasAuthority('Customer')")
-	public Cart getUserCart(String username) {
+	public static Cart getUserCart(String username) {
 		if (usersCarts.containsKey(username)) {
 			return usersCarts.get(username);
 		} else {

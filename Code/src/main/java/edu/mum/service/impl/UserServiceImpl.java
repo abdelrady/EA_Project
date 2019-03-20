@@ -22,7 +22,7 @@ import edu.mum.service.ItemService;
 import edu.mum.service.UserService;
 
 @Service
-@Transactional
+@Transactional 
 public class UserServiceImpl implements edu.mum.service.UserService {
 
 	@Autowired
@@ -34,7 +34,7 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	@Autowired
 	CategoryService categoryService;
 
-	@Autowired
+	
 	CartServiceImpl cartService;
 
 	public void save(User user) {
