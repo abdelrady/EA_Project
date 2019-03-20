@@ -39,21 +39,21 @@ public class AdminServiceImpl {
 
 	@Autowired
 	TestUsers testUsers;
-	
+
 	@Autowired
 	ProductBatch productBatch;
-	
+
 	@Autowired
 	OrderService orderService;
 
-	public void InitialData(){
+	public void InitialData() {
 
 		Authority admin = new Authority("Admin");
 		Authority customer = new Authority("Customer");
-		
+
 		authService.save(admin);
 		authService.save(customer);
-		
+
 		User user = new User();
 		user.setFirstName("Wael");
 		user.setLastName("Rezk");
@@ -64,7 +64,7 @@ public class AdminServiceImpl {
 		user.setAuthority(admin);
 		userService.save(user);
 
-	    user = new User();
+		user = new User();
 		user.setFirstName("Ahmed");
 		user.setLastName("Said");
 		user.setEmail("Asaid@abc.com");
@@ -72,9 +72,8 @@ public class AdminServiceImpl {
 		user.setPassword("Asaid");
 		user.setEnabled(true);
 		user.setAuthority(customer);
-		
-		userService.save(user);
 
+		userService.save(user);
 
 		Category categorySports = new Category("Sports");
 		categoryService.save(categorySports);
@@ -83,7 +82,7 @@ public class AdminServiceImpl {
 		Category categoryGifts = new Category("Gifts");
 		categoryService.save(categoryGifts);
 
-		User buyer = userService.findOne(2L); 
+		User buyer = userService.findOne(2L);
 		User seller = userService.findOne(1L);
 		System.out.println(buyer.getFirstName());
 		System.out.println(seller.getFirstName());
@@ -126,17 +125,16 @@ public class AdminServiceImpl {
 
 	}
 
-	public void addUser(){
+	public void addUser() {
 
-		Authority role ;
+		Authority role;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Select Role [1] Admin :"
-				+ "[2] customer ");
-		if (sc.nextInt()==1)
+		System.out.println("Select Role [1] Admin :" + "[2] customer ");
+		if (sc.nextInt() == 1)
 			role = new Authority("Admin");
 		else
 			role = new Authority("Customer");
-		
+
 		authService.save(role);
 		System.out.println("First Name : ");
 		User user = new User();
@@ -145,47 +143,60 @@ public class AdminServiceImpl {
 		user.setLastName(sc.next());
 		System.out.println("Email : ");
 		user.setEmail(sc.next());
-		System.out.println(sc.next());
-		user.setUserName("wrezk");
+		System.out.println("Username : ");
+		user.setUserName(sc.next());
 		System.out.println("Password : ");
 		user.setPassword(sc.next());
-		
+
 		user.setAuthority(role);
 		userService.save(user);
 
-
-	}
-	
-	public void listAllUser(){
-
-		
-		List<User> users=userService.findAll();
-	for (User user : users) {
-		System.out.println(user.toString());
 	}
 
+	public void listAllUser() {
+
+		List<User> users = userService.findAll();
+		for (User user : users) {
+			System.out.println(user.toString());
+		}
 
 	}
-	
 
-	@PreAuthorize("hasAuthority('Admin')") 
-	public void AddCategory(String categoryName) {
+	public void listAllCategories() {
+
+		List<Category> categories = categoryService.findAll();
+		for (Category category : categories) {
+			System.out.println(category.toString());
+		}
+
+	}
+
+	@PreAuthorize("hasAuthority('Admin')")
+	public void AddCategory() {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Category Name : ");
 		Category newCategory = new Category(sc.next());
 		categoryService.save(newCategory);
 	}
-	@PreAuthorize("hasAuthority('Admin')") 
+
+	@PreAuthorize("hasAuthority('Admin')")
 	public void updateCategoryName() {
 
+		listAllCategories();
+
+		System.out.println("Enter ID of Category to update : ");
+
 		Scanner sc = new Scanner(System.in);
+		
+		Category newCategory= categoryService.findOne(sc.nextLong());
+
 		System.out.println("New Category Name : ");
-		Category newCategory = new Category(sc.nextLine());
+		 newCategory.setName(sc.next());
 		categoryService.update(newCategory);
 	}
 
-	@PreAuthorize("hasAuthority('Admin')") 
+	@PreAuthorize("hasAuthority('Admin')")
 	public void addItems() {
 
 		Scanner sc = new Scanner(System.in);
@@ -201,7 +212,7 @@ public class AdminServiceImpl {
 
 		itemService.save(newItem);
 	}
-	
+
 	public void updateItemPrice() {
 
 		listAllItems();
@@ -215,9 +226,8 @@ public class AdminServiceImpl {
 
 		itemService.update(item);
 	}
-	
-	public void updateItemName() {
 
+	public void updateItemName() {
 
 		listAllItems();
 
@@ -231,7 +241,6 @@ public class AdminServiceImpl {
 		itemService.update(item);
 	}
 
-	
 	public void runBatch() {
 		try {
 			productBatch.startjob();
@@ -240,18 +249,17 @@ public class AdminServiceImpl {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void listOrders() {
 		List<Order> orders = orderService.findAll();
-		if(CollectionUtils.isNotEmpty(orders))
-		{
+		if (CollectionUtils.isNotEmpty(orders)) {
 			for (Order o : orders) {
 				System.out.println(o.toString());
-			}	
+			}
 		}
 	}
-	
-	@PreAuthorize("hasAuthority('Admin')") 
+
+	@PreAuthorize("hasAuthority('Admin')")
 	public void listAllItems() {
 
 		List<Product> items = itemService.findAll();
@@ -259,6 +267,5 @@ public class AdminServiceImpl {
 			System.out.println(item.toString());
 		}
 	}
-	
 
 }

@@ -2,8 +2,6 @@ package edu.mum.service.impl;
 
 import java.util.List;
 
-import javax.naming.AuthenticationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,15 +9,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.dao.AuthorityDao;
-import edu.mum.dao.GenericDao;
-import edu.mum.dao.UserDao;
 import edu.mum.domain.Authority;
-import edu.mum.domain.User;
 
 @Service
 @Transactional 
@@ -32,15 +26,18 @@ public class AuthServiceImpl implements edu.mum.service.AuthService {
 	AuthenticationManager authenticationManager;
 
  	
-     public void save(Authority authority) {
+     @Override
+	public void save(Authority authority) {
     	 authorityDao.save(authority);
  	}
   	
   	
+	@Override
 	public List<Authority> findAll(){
-		return (List<Authority>)authorityDao.findAll();
+		return authorityDao.findAll();
 	}
 
+	@Override
 	public Authority update(Authority authority) {
 		 return authorityDao.update(authority);
 	}

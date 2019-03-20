@@ -5,7 +5,6 @@ import javax.validation.constraints.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -29,7 +28,7 @@ public class Product {
 	private String name;
 
 	@Column(name = "DESCRIPTION", length = 4000, nullable = false)
-	@Size(min = 10, max = 4000, message = "{size}")
+	@Size(min = 4, max = 4000, message = "{size}")
 	private String description;
 
 	@Column
@@ -104,6 +103,7 @@ public class Product {
 
 	// ********************** Common Methods ********************** //
 
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -120,6 +120,7 @@ public class Product {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		int result;
 		result = (name != null ? name.hashCode() : 0);
@@ -127,6 +128,7 @@ public class Product {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		return "Item ('" + getId() + "'), " + "Name: '" + getName() + "' " + "Initial Price: '" + getPrice()
 				+ "'";
