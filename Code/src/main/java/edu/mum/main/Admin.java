@@ -29,6 +29,7 @@ public class Admin {
 
 		int key = 0;
 		while (key != -1) {
+			System.out.println("====================================");
 			System.out.println("Please write option no or -1 to exit");
 			System.out.println("[0] Initial Data");
 			System.out.println("[1] List All items");
