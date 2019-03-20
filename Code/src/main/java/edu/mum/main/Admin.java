@@ -39,6 +39,8 @@ public class Admin {
 			System.out.println("[6] Add Item");
 			System.out.println("[7] Update Item Price");
 			System.out.println("[8] Update Item Name");
+			System.out.println("[9] Import Product from CSV file");
+			System.out.println("[10] List orders");
 			Scanner sc = new Scanner(System.in);
 			key = sc.nextInt();
 			switch (key) {
@@ -90,6 +92,14 @@ public class Admin {
 
 				adminService.updateItemName();
 
+				break;
+				
+			case 9://run batch
+				adminService.runBatch();
+				break;
+				
+			case 10://list Orders
+				adminService.listOrders();
 				break;
 
 			default:

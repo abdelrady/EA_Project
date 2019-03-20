@@ -5,16 +5,20 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
+import edu.mum.batch.ProductBatch;
 import edu.mum.domain.Authority;
 import edu.mum.domain.Category;
+import edu.mum.domain.Order;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.main.TestUsers;
 import edu.mum.service.AuthService;
 import edu.mum.service.CategoryService;
 import edu.mum.service.ItemService;
+import edu.mum.service.OrderService;
 import edu.mum.service.UserService;
 
 @Component
@@ -34,6 +38,12 @@ public class AdminServiceImpl {
 
 	@Autowired
 	TestUsers testUsers;
+	
+	@Autowired
+	ProductBatch productBatch;
+	
+	@Autowired
+	OrderService orderService;
 
 	public void InitialData(){
 
@@ -49,6 +59,7 @@ public class AdminServiceImpl {
 		user.setEmail("wrezk@mum.com");
 		user.setUserName("wrezk");
 		user.setPassword("wrezk");
+		user.setEnabled(true);
 		user.setAuthority(admin);
 		userService.save(user);
 
@@ -58,6 +69,7 @@ public class AdminServiceImpl {
 		user.setEmail("Asaid@abc.com");
 		user.setUserName("Asaid");
 		user.setPassword("Asaid");
+		user.setEnabled(true);
 		user.setAuthority(customer);
 		
 		userService.save(user);
@@ -154,6 +166,8 @@ public class AdminServiceImpl {
 
 	}
 	
+
+	@PreAuthorize("hasAuthority('Admin')") 
 	public void AddCategory(String categoryName) {
 
 		Scanner sc = new Scanner(System.in);
@@ -161,7 +175,7 @@ public class AdminServiceImpl {
 		Category newCategory = new Category(sc.next());
 		categoryService.save(newCategory);
 	}
-
+	@PreAuthorize("hasAuthority('Admin')") 
 	public void updateCategoryName() {
 
 		Scanner sc = new Scanner(System.in);
@@ -170,6 +184,7 @@ public class AdminServiceImpl {
 		categoryService.update(newCategory);
 	}
 
+	@PreAuthorize("hasAuthority('Admin')") 
 	public void addItems() {
 
 		Scanner sc = new Scanner(System.in);
@@ -178,9 +193,8 @@ public class AdminServiceImpl {
 		newItem.setName(sc.nextLine());
 		System.out.println("Item Description : ");
 		newItem.setDescription(sc.nextLine());
-		System.out.println("Item Initial Price : ");
+		System.out.println("Item  Price : ");
 		newItem.setPrice(sc.nextBigDecimal());
-		System.out.println("Item Reserve Price : ");
 		System.out.println("Item Category : ");
 //		newItem.addCategory(sc.nextInt());
 
@@ -216,6 +230,23 @@ public class AdminServiceImpl {
 		itemService.update(item);
 	}
 
+	
+	public void runBatch() {
+		try {
+			productBatch.startjob();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void listOrders() {
+		List<Order> orders = orderService.findAll();
+		orders.stream().forEach(o -> System.out.println(o.toString()));
+		
+	}
+	
+	@PreAuthorize("hasAuthority('Admin')") 
 	public void listAllItems() {
 
 		List<Product> items = itemService.findAll();
@@ -223,4 +254,6 @@ public class AdminServiceImpl {
 			System.out.println(item.toString());
 		}
 	}
+	
+
 }

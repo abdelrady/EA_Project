@@ -1,5 +1,6 @@
 package edu.mum.main;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -8,14 +9,20 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import edu.mum.domain.*;
+import edu.mum.service.AuthService;
+import edu.mum.service.UserService;
 import edu.mum.service.impl.AdminServiceImpl;
+import edu.mum.service.impl.AuthServiceImpl;
 
 @Component
 public class Main {
 
-	private Map<String, Cart> usersCarts = new HashMap<>();
+	
 	
 	@Autowired
 	TestUsers testUsers;
@@ -28,6 +35,10 @@ public class Main {
 	
 	@Autowired
 	AdminServiceImpl adminService;
+	
+	@Autowired
+	AuthService authService;
+	
 
 	public static void main(String[] args) {
 
@@ -36,9 +47,48 @@ public class Main {
 	}
 
 	private void mainInternal(ApplicationContext applicationContext)  {
+		
+		adminService.InitialData();
+		
 		int key = 0;
-
-		admin.adminActions();
+		String username="";
+		String password="";
+		System.out.println("Welcome to SpringArrival!");
+		System.out.println("Please enter you credentials");
+		System.out.print("User name:");
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
+		username = sc.next();
+		System.out.print("Password:");
+		 sc = new Scanner(System.in);
+		password = sc.next();
+		boolean isAdmin=false;
+		boolean isCustomer=false;
+		Authentication result=authService.Login(username,password);
+		// System.out.println("Successfully authenticated. Security context contains: " +
+	       //       SecurityContextHolder.getContext().getAuthentication());
+		if(result!=null && result.isAuthenticated()==true)
+				{
+			for(GrantedAuthority a : result.getAuthorities())
+			{
+				System.out.println(a.getAuthority());
+				if(a.getAuthority().equals("Admin"))
+					isAdmin=true;
+				if(a.getAuthority().equals("Customer"))
+					isCustomer=true;
+			}
+			
+			if(isAdmin)
+			admin.adminActions();
+			else if(isCustomer)
+			{
+				//customer actions here
+			}
+				
+				}
+		
+		
+		
 	}
 
 }

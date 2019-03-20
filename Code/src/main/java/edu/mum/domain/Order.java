@@ -24,5 +24,10 @@ public class Order {
 	@Column
 	private BigDecimal totalPrice;
 	
+	@Override
+	public String toString() {
+		return "OrderId:" + id + " of User: " + owner.getUserName();
+	}
+	
 }
 

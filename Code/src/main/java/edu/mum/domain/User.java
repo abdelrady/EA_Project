@@ -40,13 +40,13 @@ public class User implements Serializable {
 //	@Size(min = 4, max = 20, message = "{size}")
 	String userName;
 
-	@Column(name = "PASSWORD", nullable = false, length = 32)
 //	@NotEmpty
 //	@Size(min = 8, max = 30, message = "{size}")
+	@Column(name = "PASSWORD", nullable = false)
 	String password;
 
 	@Column
-	Boolean disabled;
+	Boolean enabled;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "authority_id", nullable = false)
@@ -116,12 +116,12 @@ public class User implements Serializable {
 		this.authority = authority;
 	}
 
-	public Boolean getDisabled() {
-		return disabled;
+	
+	public Boolean getEnabled() {
+		return enabled;
 	}
-
-	public void setDisabled(Boolean disabled) {
-		this.disabled = disabled;
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public Set<Order> getOrders() {

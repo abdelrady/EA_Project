@@ -4,6 +4,8 @@ package edu.mum.dao.impl;
 
 import javax.persistence.Query;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import edu.mum.dao.UserDao;
@@ -25,6 +27,6 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 			     
 
 	}
-
+	
 
  }
