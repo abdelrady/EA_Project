@@ -3,6 +3,8 @@ package edu.mum.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,10 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 
  	
      public void save( User user) {
+    	 PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();   		
+			String encodedPassword = passwordEncoder.encode(user.getPassword());
+			user.setPassword(encodedPassword);
+			
     	userDao.save(user);
  	}
   	

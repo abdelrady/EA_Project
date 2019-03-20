@@ -1,5 +1,6 @@
 package edu.mum.main;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -8,8 +9,12 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import edu.mum.domain.*;
+import edu.mum.service.AuthService;
+import edu.mum.service.UserService;
 import edu.mum.service.impl.AdminServiceImpl;
 import edu.mum.service.impl.AuthServiceImpl;
 
@@ -31,7 +36,8 @@ public class Main {
 	AdminServiceImpl adminService;
 	
 	@Autowired
-	AuthServiceImpl authService;
+	AuthService authService;
+	
 
 	public static void main(String[] args) {
 
@@ -40,6 +46,9 @@ public class Main {
 	}
 
 	private void mainInternal(ApplicationContext applicationContext)  {
+		
+		adminService.InitialData();
+		
 		int key = 0;
 String username="";
 String password="";
@@ -52,13 +61,29 @@ String password="";
 		System.out.print("Password:");
 		 sc = new Scanner(System.in);
 		password = sc.next();
-		
-		System.out.print(username+password);
-		
-		if(authService.Login(username,password))
+		boolean isAdmin=false;
+		boolean isCustomer=false;
+		Authentication result=authService.Login(username,password);
+		if(result!=null && result.isAuthenticated()==true)
 				{
+			for(GrantedAuthority a : result.getAuthorities())
+			{
+				System.out.println(a.getAuthority());
+				if(a.getAuthority().equals("Admin"))
+					isAdmin=true;
+				if(a.getAuthority().equals("Customer"))
+					isCustomer=true;
+			}
+			
+			if(isAdmin)
 			admin.adminActions();
+			else if(isCustomer)
+			{
+				//customer actions here
+			}
+				
 				}
+		
 		
 		
 	}

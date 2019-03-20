@@ -49,6 +49,7 @@ public class AdminServiceImpl {
 		user.setEmail("wrezk@mum.com");
 		user.setUserName("wrezk");
 		user.setPassword("wrezk");
+		user.setEnabled(true);
 		user.setAuthority(admin);
 		userService.save(user);
 
@@ -58,6 +59,7 @@ public class AdminServiceImpl {
 		user.setEmail("Asaid@abc.com");
 		user.setUserName("Asaid");
 		user.setPassword("Asaid");
+		user.setEnabled(true);
 		user.setAuthority(customer);
 		
 		userService.save(user);
