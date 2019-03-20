@@ -252,6 +252,7 @@ public class AdminServiceImpl {
 
 	public void listOrders() {
 		List<Order> orders = orderService.findAll();
+		System.out.println("Numbers of orders: " + orders.size());
 		if (CollectionUtils.isNotEmpty(orders)) {
 			for (Order o : orders) {
 				System.out.println(o.toString());
