@@ -40,7 +40,7 @@ public class Main {
 
 	private void mainInternal(ApplicationContext applicationContext)  {
 		
-		adminService.InitialData();
+//		adminService.InitialData();
 		
 		int key = 0;
 		String username="";
