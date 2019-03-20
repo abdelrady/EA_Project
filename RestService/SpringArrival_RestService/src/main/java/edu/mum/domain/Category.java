@@ -1,6 +1,8 @@
 package edu.mum.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.*;
 
@@ -13,7 +15,9 @@ public class Category implements Serializable {
 	@Column(name = "CATEGORY_ID")
 	private Long id = null;
 
+	
 	@Column(name = "CATEGORY_NAME", length = 255, nullable = false)
+	@Size(min = 4, max = 20, message = "{size}")
 	private String name;
 
 	@ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -82,6 +86,7 @@ public class Category implements Serializable {
 
 	// ********************** Common Methods ********************** //
 
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -97,6 +102,7 @@ public class Category implements Serializable {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		int result;
 		result = name.hashCode();
@@ -111,6 +117,7 @@ public class Category implements Serializable {
 		return 0;
 	}
 
+	@Override
 	public String toString() {
 		return "(" + getId() + ") Name: '" + getName();
 	}
