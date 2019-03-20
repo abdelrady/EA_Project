@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import edu.mum.domain.*;
 import edu.mum.service.AuthService;
@@ -21,7 +22,7 @@ import edu.mum.service.impl.AuthServiceImpl;
 @Component
 public class Main {
 
-	private Map<String, Cart> usersCarts = new HashMap<>();
+	
 	
 	@Autowired
 	TestUsers testUsers;
@@ -50,8 +51,8 @@ public class Main {
 		adminService.InitialData();
 		
 		int key = 0;
-String username="";
-String password="";
+		String username="";
+		String password="";
 		System.out.println("Welcome to SpringArrival!");
 		System.out.println("Please enter you credentials");
 		System.out.print("User name:");
@@ -64,6 +65,8 @@ String password="";
 		boolean isAdmin=false;
 		boolean isCustomer=false;
 		Authentication result=authService.Login(username,password);
+		// System.out.println("Successfully authenticated. Security context contains: " +
+	       //       SecurityContextHolder.getContext().getAuthentication());
 		if(result!=null && result.isAuthenticated()==true)
 				{
 			for(GrantedAuthority a : result.getAuthorities())

@@ -19,4 +19,12 @@ public class Cart {
 
 	private BigDecimal totalPrice;
 	
+	public void addItem(Product product,int quantity)
+	{
+		OrderItem orderItem=new OrderItem();
+		orderItem.setProduct(product);
+		orderItem.setQuantity(quantity);
+		orderItems.add(orderItem);
+	}
+	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import edu.mum.batch.ProductBatch;
@@ -121,6 +122,7 @@ public class AdminServiceImpl {
 
 	}
 
+	@PreAuthorize("hasAuthority('Admin')") 
 	public void AddCategory(String categoryName) {
 
 		Scanner sc = new Scanner(System.in);
@@ -128,7 +130,7 @@ public class AdminServiceImpl {
 		Category newCategory = new Category(sc.next());
 		categoryService.save(newCategory);
 	}
-
+	@PreAuthorize("hasAuthority('Admin')") 
 	public void updateCategoryName() {
 
 		Scanner sc = new Scanner(System.in);
@@ -137,6 +139,7 @@ public class AdminServiceImpl {
 		categoryService.update(newCategory);
 	}
 
+	@PreAuthorize("hasAuthority('Admin')") 
 	public void AddItems() {
 
 		Scanner sc = new Scanner(System.in);
@@ -166,6 +169,8 @@ public class AdminServiceImpl {
 			e.printStackTrace();
 		}
 	}
+	
+	@PreAuthorize("hasAuthority('Admin')") 
 	public void listAllItems() {
 
 		List<Product> items = itemService.findAll();

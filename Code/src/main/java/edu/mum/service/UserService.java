@@ -2,6 +2,7 @@ package edu.mum.service;
 
 import java.util.List;
 
+import edu.mum.domain.Product;
 import edu.mum.domain.User;
  
 public interface UserService {
@@ -12,4 +13,11 @@ public interface UserService {
 	public User findByEmail(String email);
 	public User update(User user);
 	public User testRefresh(User user);
+	
+	public void listItems();
+	public void addItemToCart(Product product,int quantity);
+	public void removeItemFromCart(Product product);
+	public void showCart();
+	public void checkout();
+	
 }
