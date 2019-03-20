@@ -27,4 +27,14 @@ public class Cart {
 		orderItems.add(orderItem);
 	}
 	
+	public void removeItem(int productIndex)
+	{
+		orderItems.remove(productIndex);
+	}
+	
+	public List<OrderItem> getOrderItems()
+	{
+		return orderItems;
+	}
+	
 }

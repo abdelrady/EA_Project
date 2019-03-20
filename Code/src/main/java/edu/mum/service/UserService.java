@@ -16,7 +16,7 @@ public interface UserService {
 	
 	public void listItems();
 	public void addItemToCart(Product product,int quantity);
-	public void removeItemFromCart(Product product);
+	public void removeItemFromCart(int productIndex);
 	public void showCart();
 	public void checkout();
 	

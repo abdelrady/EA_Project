@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.mum.dao.GenericDao;
 import edu.mum.dao.UserDao;
 import edu.mum.domain.Cart;
+import edu.mum.domain.OrderItem;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.service.AuthService;
@@ -85,20 +86,29 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	public void addItemToCart(Product product, int quantity) {
 		Cart cart = cartService.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
 		cart.addItem(product, quantity);
+		System.out.println("Item is added!");
 	}
 
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
-	public void removeItemFromCart(Product product) {
+	public void removeItemFromCart(int productIndex) {
 		// TODO Auto-generated method stub
+		Cart cart = cartService.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
+		cart.removeItem(productIndex-1);
+		//check
 
 	}
 
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
 	public void showCart() {
-		// TODO Auto-generated method stub
-
+		Cart cart = cartService.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
+		Integer index=1;
+		for(OrderItem orderItem : cart.getOrderItems())
+		{
+			System.out.println(index.toString()+"-"+orderItem.toString());
+			index++;
+		}
 	}
 
 	@Override
