@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -242,8 +243,12 @@ public class AdminServiceImpl {
 	
 	public void listOrders() {
 		List<Order> orders = orderService.findAll();
-		orders.stream().forEach(o -> System.out.println(o.toString()));
-		
+		if(CollectionUtils.isNotEmpty(orders))
+		{
+			for (Order o : orders) {
+				System.out.println(o.toString());
+			}	
+		}
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')") 
