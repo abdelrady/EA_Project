@@ -14,15 +14,15 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import edu.mum.dao.ItemDao;
+import edu.mum.dao.ProductDao;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 
 @SuppressWarnings("unchecked")
 @Repository
-public class ItemDaoImpl extends GenericDaoImpl<Product> implements ItemDao {
+public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDao {
 
-	public ItemDaoImpl() {
+	public ProductDaoImpl() {
 		super.setDaoType(Product.class);
 	}
 
