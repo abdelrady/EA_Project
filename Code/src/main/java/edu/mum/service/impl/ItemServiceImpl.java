@@ -29,7 +29,6 @@ public class ItemServiceImpl implements ItemService {
 		return itemDao.update(Item);
 	}
 	
-	
 	public List<Product> findAll() {
 		return (List<Product>)itemDao.findAll();
 	}

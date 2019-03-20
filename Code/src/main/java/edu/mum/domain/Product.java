@@ -1,6 +1,7 @@
 package edu.mum.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +25,16 @@ public class Product {
 	private int version = 0;
 
 	@Column(name = "NAME", length = 255, nullable = false, updatable = false)
+	@Size(min = 4, max = 20, message = "{size}")
 	private String name;
 
 	@Column(name = "DESCRIPTION", length = 4000, nullable = false)
+	@Size(min = 10, max = 4000, message = "{size}")
 	private String description;
 
 	@Column
+	@Digits(integer=6, fraction=2)
+
 	private BigDecimal price;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

@@ -108,13 +108,52 @@ public class AdminServiceImpl {
 		itemShoes.setPrice(new BigDecimal(18.0));
 
 		itemShoes.addCategory(categoryGifts);
-
 		userService.update(buyer);
-
 		userService.findAll();
 
 	}
 
+	public void addUser(){
+
+		Authority role ;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Select Role [1] Admin :"
+				+ "[2] customer ");
+		if (sc.nextInt()==1)
+			role = new Authority("Admin");
+		else
+			role = new Authority("Customer");
+		
+		authService.save(role);
+		System.out.println("First Name : ");
+		User user = new User();
+		user.setFirstName(sc.next());
+		System.out.println("last Name : ");
+		user.setLastName(sc.next());
+		System.out.println("Email : ");
+		user.setEmail(sc.next());
+		System.out.println(sc.next());
+		user.setUserName("wrezk");
+		System.out.println("Password : ");
+		user.setPassword(sc.next());
+		
+		user.setAuthority(role);
+		userService.save(user);
+
+
+	}
+	
+	public void listAllUser(){
+
+		
+		List<User> users=userService.findAll();
+	for (User user : users) {
+		System.out.println(user.toString());
+	}
+
+
+	}
+	
 	public void AddCategory(String categoryName) {
 
 		Scanner sc = new Scanner(System.in);
@@ -131,7 +170,7 @@ public class AdminServiceImpl {
 		categoryService.update(newCategory);
 	}
 
-	public void AddItems() {
+	public void addItems() {
 
 		Scanner sc = new Scanner(System.in);
 		Product newItem = new Product();
@@ -144,11 +183,37 @@ public class AdminServiceImpl {
 		System.out.println("Item Reserve Price : ");
 		System.out.println("Item Category : ");
 //		newItem.addCategory(sc.nextInt());
-//		System.out.println("Item Seller : ");
-//		newItem.setSeller(sc.nextInt());
 
-		itemService.update(newItem);
+		itemService.save(newItem);
+	}
+	
+	public void updateItemPrice() {
 
+		listAllItems();
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter ID of item to update : ");
+		Product item = itemService.findOne(sc.nextLong());
+
+		System.out.println("New Price : ");
+		item.setPrice(sc.nextBigDecimal());
+
+		itemService.update(item);
+	}
+	
+	public void updateItemName() {
+
+
+		listAllItems();
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter ID of item to update : ");
+		Product item = itemService.findOne(sc.nextLong());
+
+		System.out.println("New Item Name : ");
+		item.setName(sc.next());
+
+		itemService.update(item);
 	}
 
 	public void listAllItems() {
@@ -158,5 +223,4 @@ public class AdminServiceImpl {
 			System.out.println(item.toString());
 		}
 	}
-
 }

@@ -15,43 +15,56 @@ public class Admin {
 
 	@Autowired
 	ItemService itemService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	CategoryService categoryService;
-	
 
 	@Autowired
 	AdminServiceImpl adminService;
 
-	
-	public void adminActions()  {
-		
+	public void adminActions() {
 
-		int key=0;
+		int key = 0;
 		while (key != -1) {
 			System.out.println("Please write the no of your option or -1 to exit");
-			System.out.println("[1] Initial Data");
-			System.out.println("[2] List All items");
-			System.out.println("[3] Add Category");
-			System.out.println("[4] AddItem");
+			System.out.println("[0] Initial Data");
+			System.out.println("[1] List All items");
+			System.out.println("[2] List All Users");
+			System.out.println("[3] Add user");
+			System.out.println("[4] Add Category");
 			System.out.println("[5] Update Category Name");
+			System.out.println("[6] Add Item");
+			System.out.println("[7] Update Item Price");
+			System.out.println("[8] Update Item Name");
 			Scanner sc = new Scanner(System.in);
 			key = sc.nextInt();
 			switch (key) {
-			case 1:
+			case 0:
 
 				adminService.InitialData();
 				break;
 
-			case 2:
+			case 1:
 
 				adminService.listAllItems();
 				break;
+				
+			case 2:
+
+				adminService.listAllUser();
+
+				break;
 
 			case 3:
+
+				adminService.addUser();
+
+				break;
+
+			case 4:
 
 				adminService.AddCategory("Winter");
 				break;
@@ -61,21 +74,27 @@ public class Admin {
 				adminService.updateCategoryName();
 
 				break;
-			case 4:
+			case 6:
 
-				adminService.AddItems();
+				adminService.addItems();
 
 				break;
-//			case 4:
-//
-//				adminService.AddItems();
-//
-//				break;
+
+			case 7:
+
+				adminService.updateItemPrice();
+
+				break;
+				
+			case 8:
+
+				adminService.updateItemName();
+
+				break;
 
 			default:
 				break;
 			}
 		}
-		
-			}
+	}
 }
