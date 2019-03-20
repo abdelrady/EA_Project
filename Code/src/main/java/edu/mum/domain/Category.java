@@ -86,6 +86,7 @@ public class Category implements Serializable {
 
 	// ********************** Common Methods ********************** //
 
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -101,6 +102,7 @@ public class Category implements Serializable {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		int result;
 		result = name.hashCode();
@@ -115,6 +117,7 @@ public class Category implements Serializable {
 		return 0;
 	}
 
+	@Override
 	public String toString() {
 		return "(" + getId() + ") Name: '" + getName();
 	}

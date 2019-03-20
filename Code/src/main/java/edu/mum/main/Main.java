@@ -1,23 +1,15 @@
 package edu.mum.main;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import edu.mum.domain.*;
 import edu.mum.service.AuthService;
-import edu.mum.service.UserService;
 import edu.mum.service.impl.AdminServiceImpl;
-import edu.mum.service.impl.AuthServiceImpl;
 
 @Component
 public class Main {

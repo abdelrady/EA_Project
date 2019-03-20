@@ -4,8 +4,6 @@ package edu.mum.dao.impl;
 
 import javax.persistence.Query;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import edu.mum.dao.UserDao;
@@ -20,6 +18,7 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 		super.setDaoType(User.class );
 		}
 
+	@Override
 	public User findByEmail(String email) {
 	     
 		Query query = entityManager.createQuery("select u from User u  where u.email =:email");

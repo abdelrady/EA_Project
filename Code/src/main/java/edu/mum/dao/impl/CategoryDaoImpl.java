@@ -18,6 +18,7 @@ public class CategoryDaoImpl extends GenericDaoImpl<Category> implements Categor
 		super.setDaoType(Category.class );
 		}
 
+	@Override
 	public Category findByCategoryName(String name) {
 	     
 		Query query = entityManager.createQuery("select p from Category p  where p.name =:name");
