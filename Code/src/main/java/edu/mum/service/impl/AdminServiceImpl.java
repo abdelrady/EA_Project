@@ -11,12 +11,14 @@ import org.springframework.stereotype.Component;
 import edu.mum.batch.ProductBatch;
 import edu.mum.domain.Authority;
 import edu.mum.domain.Category;
+import edu.mum.domain.Order;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.main.TestUsers;
 import edu.mum.service.AuthService;
 import edu.mum.service.CategoryService;
 import edu.mum.service.ItemService;
+import edu.mum.service.OrderService;
 import edu.mum.service.UserService;
 
 @Component
@@ -39,6 +41,9 @@ public class AdminServiceImpl {
 	
 	@Autowired
 	ProductBatch productBatch;
+	
+	@Autowired
+	OrderService orderService;
 
 	public void InitialData(){
 
@@ -168,6 +173,12 @@ public class AdminServiceImpl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void listOrders() {
+		List<Order> orders = orderService.findAll();
+		orders.stream().forEach(o -> System.out.println(o.toString()));
+		
 	}
 	
 	@PreAuthorize("hasAuthority('Admin')") 

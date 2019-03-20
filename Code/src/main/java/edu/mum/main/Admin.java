@@ -39,6 +39,7 @@ public class Admin {
 			System.out.println("[4] AddItem");
 			System.out.println("[5] Update Category Name");
 			System.out.println("[6] Import Product from CSV file");
+			System.out.println("[7] List orders");
 			Scanner sc = new Scanner(System.in);
 			key = sc.nextInt();
 			switch (key) {
@@ -69,6 +70,10 @@ public class Admin {
 				break;
 			case 6://run batch
 				adminService.runBatch();
+				break;
+				
+			case 7://list Orders
+				adminService.listOrders();
 				break;
 
 			default:
