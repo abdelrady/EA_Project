@@ -2,27 +2,11 @@ package edu.mum.domain;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Authority {
 
-
-	public Authority() {
-		this.authority = "";
-	}
-	
-	public Authority(String role) {
-		this.authority = role;
-	}
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -33,6 +17,15 @@ public class Authority {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "authority")
 	private List<User> users;
 
+
+	public Authority() {
+		this.authority = "";
+	}
+	
+	public Authority(String role) {
+		this.authority = role;
+	}
+	
 	public List<User> getUsers() {
 		return users;
 	}
