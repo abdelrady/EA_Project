@@ -3,6 +3,11 @@ package edu.mum.service.impl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,110 +51,46 @@ public class AdminServiceImpl {
 	@Autowired
 	OrderService orderService;
 
-	public void InitialData() {
-
-		Authority admin = new Authority("Admin");
-		Authority customer = new Authority("Customer");
-
-		authService.save(admin);
-		authService.save(customer);
-
-		User user = new User();
-		user.setFirstName("Wael");
-		user.setLastName("Rezk");
-		user.setEmail("wrezk@mum.com");
-		user.setUserName("wrezk");
-		user.setPassword("wrezk");
-		user.setEnabled(true);
-		user.setAuthority(admin);
-		userService.save(user);
-
-		user = new User();
-		user.setFirstName("Ahmed");
-		user.setLastName("Said");
-		user.setEmail("Asaid@abc.com");
-		user.setUserName("Asaid");
-		user.setPassword("Asaid");
-		user.setEnabled(true);
-		user.setAuthority(customer);
-
-		userService.save(user);
-
-		Category categorySports = new Category("Sports");
-		categoryService.save(categorySports);
-		Category categoryToys = new Category("Toys");
-		categoryService.save(categoryToys);
-		Category categoryGifts = new Category("Gifts");
-		categoryService.save(categoryGifts);
-
-		User buyer = userService.findOne(2L);
-		User seller = userService.findOne(1L);
-		System.out.println(buyer.getFirstName());
-		System.out.println(seller.getFirstName());
-
-		Product itemSled = new Product();
-		itemSled.setName("Sled");
-		itemSled.setDescription("Winter time fun");
-		itemSled.setPrice(new BigDecimal(28.0));
-
-		itemSled.addCategory(categoryToys);
-		itemSled.addCategory(categorySports);
-		itemService.update(itemSled);
-
-		// Second item
-
-		Product itemSkates = new Product();
-		itemSkates.setName("Skates");
-		itemSkates.setDescription("Winter time gliding");
-		itemSkates.setPrice(new BigDecimal(22.0));
-
-		// Reload categories from db
-		categoryToys = categoryService.findOne(categoryToys.getId());
-		categorySports = categoryService.findOne(categorySports.getId());
-
-		itemSkates.addCategory(categoryToys);
-		itemSkates.addCategory(categorySports);
-
-		// Need to merge .. to handle detached categories....
-		itemSkates = itemService.update(itemSkates);
-
-		// Buyer & Reserve = initial will be found by findItemsBySellOrBuy based on
-		Product itemShoes = new Product();
-		itemShoes.setName("Shoes");
-		itemShoes.setDescription("Snug Fit");
-		itemShoes.setPrice(new BigDecimal(18.0));
-
-		itemShoes.addCategory(categoryGifts);
-		userService.update(buyer);
-		userService.findAll();
-
-	}
-
 	public void addUser() {
 
-		Authority role;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Select Role [1] Admin :" + "[2] customer ");
-		if (sc.nextInt() == 1)
-			role = new Authority("Admin");
-		else
-			role = new Authority("Customer");
-
-		authService.save(role);
-		System.out.println("First Name : ");
 		User user = new User();
-		user.setFirstName(sc.next());
-		System.out.println("last Name : ");
-		user.setLastName(sc.next());
-		System.out.println("Email : ");
-		user.setEmail(sc.next());
-		System.out.println("Username : ");
-		user.setUserName(sc.next());
-		System.out.println("Password : ");
-		user.setPassword(sc.next());
+		Authority role;
 
-		user.setAuthority(role);
-		userService.save(user);
+		try {
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Select Role [1] Admin :" + "[2] customer ");
+			if (sc.nextInt() == 1)
+				role = new Authority("Admin");
+			else
+				role = new Authority("Customer");
+
+			authService.save(role);
+			System.out.println("First Name : ");
+			user.setFirstName(sc.next());
+			System.out.println("last Name : ");
+			user.setLastName(sc.next());
+			System.out.println("Email : ");
+			user.setEmail(sc.next());
+			System.out.println("Username : ");
+			user.setUserName(sc.next());
+			System.out.println("Password : ");
+			user.setPassword(sc.next());
+
+			user.setAuthority(role);
+			userService.save(user);
+
+		} catch (Exception e) {
+			Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+			Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+
+			System.out.println("Not added successfully");
+			for (ConstraintViolation<?> violation : constraintViolations) {
+				System.out.format("%10s | %35s | value is %10s%n", violation.getPropertyPath(), violation.getMessage(),
+						violation.getInvalidValue());
+			}
+
+		}
 
 	}
 
@@ -177,7 +118,20 @@ public class AdminServiceImpl {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Category Name : ");
 		Category newCategory = new Category(sc.next());
-		categoryService.save(newCategory);
+		try {
+			categoryService.save(newCategory);
+
+		} catch (Exception e) {
+			Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+			Set<ConstraintViolation<Category>> constraintViolations = validator.validate(newCategory);
+
+			System.out.println("Not added successfully");
+			for (ConstraintViolation<?> violation : constraintViolations) {
+				System.out.format("%10s | %35s | value is %10s%n", violation.getPropertyPath(), violation.getMessage(),
+						violation.getInvalidValue());
+			}
+		}
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
@@ -188,12 +142,27 @@ public class AdminServiceImpl {
 		System.out.println("Enter ID of Category to update : ");
 
 		Scanner sc = new Scanner(System.in);
-		
-		Category newCategory= categoryService.findOne(sc.nextLong());
 
-		System.out.println("New Category Name : ");
-		 newCategory.setName(sc.next());
-		categoryService.update(newCategory);
+		Category newCategory = categoryService.findOne(sc.nextLong());
+
+		
+		try {
+			System.out.println("New Category Name : ");
+			newCategory.setName(sc.next());
+			categoryService.update(newCategory);
+
+		} catch (Exception e) {
+			Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+			Set<ConstraintViolation<Category>> constraintViolations = validator.validate(newCategory);
+
+			System.out.println("Not added successfully");
+			for (ConstraintViolation<?> violation : constraintViolations) {
+				System.out.format("%10s | %35s | value is %10s%n", violation.getPropertyPath(), violation.getMessage(),
+						violation.getInvalidValue());
+			}
+		}
+
 	}
 
 	@PreAuthorize("hasAuthority('Admin')")
@@ -201,30 +170,63 @@ public class AdminServiceImpl {
 
 		Scanner sc = new Scanner(System.in);
 		Product newItem = new Product();
-		System.out.println("Item Name : ");
-		newItem.setName(sc.nextLine());
-		System.out.println("Item Description : ");
-		newItem.setDescription(sc.nextLine());
-		System.out.println("Item  Price : ");
-		newItem.setPrice(sc.nextBigDecimal());
-		System.out.println("Item Category : ");
+
 //		newItem.addCategory(sc.nextInt());
 
-		itemService.save(newItem);
+		try {
+			System.out.println("Enter ID of Category of Item : ");
+
+			listAllCategories();
+
+			Category newCategory = categoryService.findOne(sc.nextLong());
+//			newItem.addCategory(newCategory);
+			System.out.println("Item Name : ");
+			newItem.setName(sc.next());
+			System.out.println("Item Description : ");
+			newItem.setDescription(sc.next());
+			System.out.println("Item  Price : ");
+			newItem.setPrice(sc.nextBigDecimal());
+
+			itemService.save(newItem);
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+			Set<ConstraintViolation<Product>> constraintViolations = validator.validate(newItem);
+
+			System.out.println("Not added successfully");
+			for (ConstraintViolation<?> violation : constraintViolations) {
+				System.out.format("%10s | %35s | value is %10s%n", violation.getPropertyPath(), violation.getMessage(),
+						violation.getInvalidValue());
+			}
+		}
 	}
 
 	public void updateItemPrice() {
 
 		listAllItems();
-
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter ID of item to update : ");
 		Product item = itemService.findOne(sc.nextLong());
+		try {
 
-		System.out.println("New Price : ");
-		item.setPrice(sc.nextBigDecimal());
+			System.out.println("New Price : ");
+			item.setPrice(sc.nextBigDecimal());
 
-		itemService.update(item);
+			itemService.update(item);
+
+		} catch (Exception e) {
+			Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+			Set<ConstraintViolation<Product>> constraintViolations = validator.validate(item);
+
+			System.out.println("Not added successfully");
+			for (ConstraintViolation<?> violation : constraintViolations) {
+				System.out.format("%10s | %35s | value is %10s%n", violation.getPropertyPath(), violation.getMessage(),
+						violation.getInvalidValue());
+			}
+		}
 	}
 
 	public void updateItemName() {
@@ -235,10 +237,24 @@ public class AdminServiceImpl {
 		System.out.println("Enter ID of item to update : ");
 		Product item = itemService.findOne(sc.nextLong());
 
-		System.out.println("New Item Name : ");
-		item.setName(sc.next());
+		try {
 
-		itemService.update(item);
+			System.out.println("New Item Name : ");
+			item.setName(sc.next());
+
+			itemService.update(item);
+
+		} catch (Exception e) {
+			Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+			Set<ConstraintViolation<Product>> constraintViolations = validator.validate(item);
+
+			System.out.println("Not added successfully");
+			for (ConstraintViolation<?> violation : constraintViolations) {
+				System.out.format("%10s | %35s | value is %10s%n", violation.getPropertyPath(), violation.getMessage(),
+						violation.getInvalidValue());
+			}
+		}
 	}
 
 	public void runBatch() {

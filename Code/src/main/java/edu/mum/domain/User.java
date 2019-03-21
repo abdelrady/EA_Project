@@ -20,25 +20,24 @@ public class User implements Serializable {
 	private Long id = null;
 
 	@Column(name = "FIRSTNAME", nullable = false)
-	@Size(min = 3, max = 20, message = "{size}")
+	@Size(min = 3, max = 20)
 	private String firstName;
 
 	@Column(name = "LASTNAME", nullable = false)
-	@Size(min = 3, max = 20, message = "{size}")
+	@Size(min = 3, max = 20)
 	private String lastName;
 
 	@Column(name = "EMAIL", nullable = false)
 	@NotNull()
-	@Email(message = "{email}")
+	@Email
 	private String email;
 
 	@Column(nullable = false)
-	@NotEmpty
-	@Size(min = 4, max = 20, message = "{size}")
+	@NotNull
+	@Size(min = 4, max = 20)
 	String userName;
 
-	@NotEmpty
-//	@Size(min = 3, max = 30, message = "{size}")
+	@NotNull
 	@Column(name = "PASSWORD", nullable = false)
 	String password;
 
