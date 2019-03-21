@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.batch.core.BatchStatus;
+import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -17,15 +18,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductBatch {
 
-	// Configured Job
 	@Autowired
-	Job saveProducts;
+	Job importProducts;
 	
 	@Autowired
 	JobLauncher jobLauncher;
 	
 	@Autowired
-	MailService mailService;
+	SendEmail mailService;
 
 	@Scheduled(cron="0 0 0 * * * * *")
 	public void startjob() throws  Exception {
@@ -36,22 +36,14 @@ public class ProductBatch {
  	    JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
 	    jobParametersBuilder.addDate("date", new Date());
 	    JobParameters jobParameters = jobParametersBuilder.toJobParameters();
-	    JobExecution jobExecution = jobLauncher.run(saveProducts, jobParameters);
-	    
-	    //jobExecution.getAllFailureExceptions().stream();
-	    
-	    BatchStatus batchStatus = jobExecution.getStatus();
-	    
-	    while (batchStatus.isRunning()) {
-	        System.out.println("Still running...");
-	        Thread.sleep(1000);
-	    }
+	    JobExecution jobExecution = jobLauncher.run(importProducts, jobParameters);
+
 	    System.out.println("Exit status: " + jobExecution.getExitStatus().getExitCode());
+	    if(!jobExecution.getExitStatus().getExitCode().equals(ExitStatus.COMPLETED)) {
+	    	System.out.println( jobExecution.getAllFailureExceptions().toString());	
+	    }
 
-	    // send result to admin...
-	    //mailService.sendEmail();
 	    System.out.println("End of processing");
-
 	}
 	
 }
