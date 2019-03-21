@@ -20,7 +20,7 @@
 				<artifactId>spring-security-bom</artifactId>
 				<version>4.0.3.RELEASE</version>
 			</dependency>
-			
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -49,10 +49,10 @@
 			<artifactId>spring-context</artifactId>
 		</dependency>
 		<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-context-support</artifactId>
-	    <version>3.1.1.RELEASE</version>
-	</dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>3.1.1.RELEASE</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
@@ -156,7 +156,19 @@
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
 
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
 		<!-- IF building Jar...OTHERwise we are just reference Domain in Eclipse 
 			<dependency> <groupId>edu.mum</groupId> <artifactId>SecurityExampleDomain</artifactId> 
 			<version>1.0.0</version> </dependency> -->
