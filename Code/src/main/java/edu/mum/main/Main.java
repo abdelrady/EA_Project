@@ -135,6 +135,7 @@ public class Main {
 				break;
 			case 5:
 				orderService.checkout(applicationContext);
+				products = itemService.findAll();
 				break;
 			default:
 				break;

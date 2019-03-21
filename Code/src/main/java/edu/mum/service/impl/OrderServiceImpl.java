@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.dao.OrderDao;
+import edu.mum.dao.ProductDao;
 import edu.mum.dao.UserDao;
 import edu.mum.domain.*;
 import edu.mum.rest.service.OrderRestService;
@@ -59,7 +60,10 @@ public class OrderServiceImpl implements OrderService {
 		
 		orderDao.save(order);
 		
+		CartServiceImpl.clearUserCart(currentUserName);
+		
 		sendOrderForProcessing(context, order);
+		System.out.println("Order is sent for processing .. Thank you!");
 	}
 	
 	public void sendOrderForProcessing(ApplicationContext context, Order order) {

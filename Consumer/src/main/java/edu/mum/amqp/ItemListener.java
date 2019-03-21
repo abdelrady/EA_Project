@@ -7,23 +7,23 @@ import edu.mum.helpers.EmailService;
 
 public class ItemListener {
 
-	@Autowired
-	EmailService emailService;
+	//@Autowired
+	//EmailService emailService;
 	
 	public void listen(OrderStats orderStats) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("------------------------- New Order received -------------------");
-		sb.append("Order Total Price is : " + orderStats.getTotalAmount());
-		sb.append("Order Owner Email : " + orderStats.getCustomerEmail());
-		sb.append("Order Summary : " + orderStats.getItemsSummary());
-		sb.append("----------------------------------------------------------------");
+		sb.append("\nOrder Total Price is : " + orderStats.getTotalAmount());
+		sb.append("\nOrder Owner Email : " + orderStats.getCustomerEmail());
+		sb.append("\nOrder Summary : " + orderStats.getItemsSummary());
+		sb.append("\n----------------------------------------------------------------");
 		
 		String content = sb.toString();
 		System.out.println(content);
 		
 		try {
-			emailService.sendNotificationMail("Test", orderStats.getCustomerEmail(), content);
+			//emailService.sendNotificationMail("Test", orderStats.getCustomerEmail(), content);
 		}
 		catch (Exception ex){
 			ex.printStackTrace();

@@ -174,7 +174,6 @@ public class AdminServiceImpl {
 		Scanner sc = new Scanner(System.in);
 		Product newItem = new Product();
 
-//		newItem.addCategory(sc.nextInt());
 
 		try {
 			System.out.println("Enter ID of Category of Item : ");
@@ -182,7 +181,6 @@ public class AdminServiceImpl {
 			listAllCategories();
 
 			Category newCategory = categoryService.findOne(sc.nextLong());
-//			newItem.addCategory(newCategory);
 			System.out.println("Item Name : ");
 			newItem.setName(sc.next());
 			System.out.println("Item Description : ");
