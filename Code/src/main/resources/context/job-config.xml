@@ -22,27 +22,19 @@
     <bean
             id="csvFileReader"
             class="org.springframework.batch.item.file.FlatFileItemReader"
-            p:resource="classpath:data/products.csv">
+            p:resource="${input.file.name}">
         <property name="lineMapper">      
-			  <!-- DefaultLineMapper - Two-phase LineMapper implementation consisting of 
-			    1. Tokenization  - lineTokenizer[DelimitedLineTokenizer] of the line into FieldSet 
-			    2.  Mapping to item - fieldSetMapper[BeanWrapperFieldSetMapper] -->
-			            <bean
-			                    class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
-			                <property
-			                        name="lineTokenizer">
-			                    <bean
-			                            class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"
-			                            p:delimiter=","
-			                            p:names="name,description,price,remainingQuantity"/>
-			                </property>
-			                <property
-			                        name="fieldSetMapper">
-			                    <bean
-			                            class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper"
-			                            p:targetType="edu.mum.domain.Product"/>
-			                </property>
-			            </bean>
+            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+                <property name="lineTokenizer">
+                    <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"
+                            p:delimiter=","
+                            p:names="name,description,price,remainingQuantity"/>
+                </property>
+                <property name="fieldSetMapper">
+                    <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper"
+                            p:targetType="edu.mum.domain.Product"/>
+                </property>
+            </bean>
         </property>
     </bean>
 
@@ -53,17 +45,19 @@
 				<bean class="edu.mum.service.impl.ProductServiceImpl"/>
 			</property>
      </bean>
+     
+     <bean id="sendEmail" class="edu.mum.batch.SendEmail"></bean>
       
     <job id="importProduct" xmlns="http://www.springframework.org/schema/batch" restartable="true">
         <step id="step1" allow-start-if-complete="true">
             <tasklet >
-            <chunk commit-interval="5" writer="productWriter" reader="csvFileReader">
-            	
-			</chunk>
+            	<chunk commit-interval="5" writer="productWriter" reader="csvFileReader"/>            	
             </tasklet>
+           <next on="*" to="step2" />
         </step>
+        <step id="step2">
+			<tasklet ref="sendEmail"/>				
+		</step>
     </job>
-     
-  
      
     </beans>
