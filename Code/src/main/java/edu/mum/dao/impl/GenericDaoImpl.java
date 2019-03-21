@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import edu.mum.dao.GenericDao;
-import edu.mum.dao.UserDao;
 
 
 /*@SuppressWarnings("unchecked")
@@ -39,7 +38,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
 	@Override
 	public T findOne( Long id ){
-	    return (T) entityManager.find( daoType, id );
+	    return entityManager.find( daoType, id );
 	 }
 	
 	@SuppressWarnings("unchecked")

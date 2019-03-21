@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.mum.dao.GenericDao;
 import edu.mum.dao.ProductDao;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
@@ -20,20 +19,24 @@ public class ItemServiceImpl implements ItemService {
  	@Autowired
 	private ProductDao itemDao;
 
-    public void save( Product Item) {  		
+    @Override
+	public void save( Product Item) {  		
 		itemDao.save(Item);
 	}
 	
 	
-    public Product update( Product Item) {  		
+    @Override
+	public Product update( Product Item) {  		
 		return itemDao.update(Item);
 	}
 	
+	@Override
 	public List<Product> findAll() {
-		return (List<Product>)itemDao.findAll();
+		return itemDao.findAll();
 	}
 
- 	public Product findOne(Long id) {
+ 	@Override
+	public Product findOne(Long id) {
 		return itemDao.findOne(id);
 	}
 
@@ -44,10 +47,12 @@ public class ItemServiceImpl implements ItemService {
 		return itemDao.findBySellerOrBuyer(price, buyer, seller);
 	}
 
+	@Override
 	public List<Product> findByCategoryName(String categoryName) {
 		return itemDao.findByCategoryName(categoryName);
 	}
 	
+	@Override
 	public List<Product> findItemCriteria(Integer initialPrice, User buyer, User seller) {
 		return itemDao.findItemCriteria(initialPrice,buyer,seller);
 	}

@@ -19,21 +19,25 @@ public class ProductServiceImpl implements ProductService {
  	@Autowired
 	private ProductDao productDao;
 
-    public void save( Product Item) {  		
+    @Override
+	public void save( Product Item) {  		
 		productDao.save(Item);
 	}
 	
 	
-    public Product update( Product Item) {  		
+    @Override
+	public Product update( Product Item) {  		
 		return productDao.update(Item);
 	}
 	
 	
+	@Override
 	public List<Product> findAll() {
-		return (List<Product>)productDao.findAll();
+		return productDao.findAll();
 	}
 
- 	public Product findOne(Long id) {
+ 	@Override
+	public Product findOne(Long id) {
 		return productDao.findOne(id);
 	}
 
@@ -44,10 +48,12 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.findBySellerOrBuyer(price, buyer, seller);
 	}
 
+	@Override
 	public List<Product> findByCategoryName(String categoryName) {
 		return productDao.findByCategoryName(categoryName);
 	}
 	
+	@Override
 	public List<Product> findItemCriteria(Integer initialPrice, User buyer, User seller) {
 		return productDao.findItemCriteria(initialPrice,buyer,seller);
 	}

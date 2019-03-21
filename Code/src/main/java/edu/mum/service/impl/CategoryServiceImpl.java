@@ -16,24 +16,29 @@ public class CategoryServiceImpl implements edu.mum.service.CategoryService {
  	@Autowired
 	private CategoryDao categoryDao;
 
-    public void save( Category category) {  		
+    @Override
+	public void save( Category category) {  		
   		categoryDao.save(category);
  	}
   	
   	
-    public void update( Category category) {  		
+    @Override
+	public void update( Category category) {  		
   		categoryDao.update(category);
  	}
   	
   	
+	@Override
 	public List<Category> findAll() {
-		return (List<Category>)categoryDao.findAll();
+		return categoryDao.findAll();
 	}
 
+	@Override
 	public Category findByCategoryName(String name) {
 		return categoryDao.findByCategoryName(name);
 	}
  
+	@Override
 	public Category findOne(Long id) {
 		return categoryDao.findOne(id);
 	}

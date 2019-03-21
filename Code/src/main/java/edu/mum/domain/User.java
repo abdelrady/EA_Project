@@ -20,28 +20,24 @@ public class User implements Serializable {
 	private Long id = null;
 
 	@Column(name = "FIRSTNAME", nullable = false)
-//	@Size(min = 3, max = 20, message = "{size}")
+	@Size(min = 3, max = 20)
 	private String firstName;
 
 	@Column(name = "LASTNAME", nullable = false)
-//	@Size(min = 3, max = 20, message = "{size}")
+	@Size(min = 3, max = 20)
 	private String lastName;
 
 	@Column(name = "EMAIL", nullable = false)
-//	@NotNull()
-//	@Email(message = "{email}")
+	@NotNull()
+	@Email
 	private String email;
 
-	@Column(name = "IS_ADMIN", nullable = false)
-	private boolean admin = false;
-
 	@Column(nullable = false)
-//	@NotEmpty
-//	@Size(min = 4, max = 20, message = "{size}")
+	@NotNull
+	@Size(min = 4, max = 20)
 	String userName;
 
-//	@NotEmpty
-//	@Size(min = 8, max = 30, message = "{size}")
+	@NotNull
 	@Column(name = "PASSWORD", nullable = false)
 	String password;
 
@@ -62,6 +58,7 @@ public class User implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -69,6 +66,7 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -100,13 +98,6 @@ public class User implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public boolean isAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
 
 	public Authority getAuthority() {
 		return authority;
@@ -116,10 +107,10 @@ public class User implements Serializable {
 		this.authority = authority;
 	}
 
-	
 	public Boolean getEnabled() {
 		return enabled;
 	}
+
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
@@ -131,11 +122,11 @@ public class User implements Serializable {
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", admin=" + admin
-				+ ", userName=" + userName + "]";
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", userName=" + userName
+				+ "]";
 	}
 
 }

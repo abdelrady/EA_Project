@@ -18,6 +18,7 @@ public class OrderRestServiceImpl implements OrderRestService {
 	@Autowired
 	RestHttpHeader restHttpHeader;
 	
+	@Override
 	public List<Order> findAll(){
 		RestTemplate restTemplate = restHttpHeader.getRestTemplate();
 		return Arrays.asList(restTemplate.exchange("http://localhost:8080/SpringArrival_RestService/orders", HttpMethod.GET, restHttpHeader.getHttpEntity(), Order[].class).getBody());

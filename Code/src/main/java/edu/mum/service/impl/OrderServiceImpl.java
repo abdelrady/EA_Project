@@ -17,6 +17,7 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRestService orderRestService;
 	
+	@Override
 	public List<Order> findAll(){
 		return orderRestService.findAll();
 	}

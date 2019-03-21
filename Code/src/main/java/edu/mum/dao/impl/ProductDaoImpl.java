@@ -26,15 +26,17 @@ public class ProductDaoImpl extends GenericDaoImpl<Product> implements ProductDa
 		super.setDaoType(Product.class);
 	}
 
+	@Override
 	public List<Product> findByCategoryName(String categoryName) {
 
 		// TODO Replace this find ALL query with a NAMED query to find by category name
 		// Query query = entityManager.createQuery("from Item");
 		Query query = entityManager.createNamedQuery("Item.findByCategoryName");
 query.setParameter("name", categoryName);
-		return (List<Product>) query.getResultList();
+		return query.getResultList();
 	}
 
+	@Override
 	public List<Product> findBySellerOrBuyer(Integer initialPrice, User buyer, User seller) {
 		BigDecimal price = new BigDecimal(initialPrice);
 		String sellerPrice = "";
@@ -59,9 +61,10 @@ query.setParameter("name", categoryName);
 		if (buyer != null)
 			query.setParameter("buyer", buyer);
 
-		return (List<Product>) query.getResultList();
+		return query.getResultList();
 	}
 
+	@Override
 	public List<Product> findItemCriteria(Integer initialPrice, User buyer, User seller) {
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		// Typed query - expected results are of the type Item
@@ -110,7 +113,7 @@ query.setParameter("name", categoryName);
 		predicateList.toArray(predicates);
 		query.where(criteriaBuilder.or(predicates));
 
-		List<Product> items = (List<Product>) entityManager.createQuery(query).getResultList();
+		List<Product> items = entityManager.createQuery(query).getResultList();
 		return items;
 	}
 }

@@ -5,7 +5,6 @@ import javax.validation.constraints.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -25,16 +24,15 @@ public class Product {
 	private int version = 0;
 
 	@Column(name = "NAME", length = 255, nullable = false, updatable = false)
-	@Size(min = 4, max = 20, message = "{size}")
+	@Size(min = 4, max = 20)
 	private String name;
 
 	@Column(name = "DESCRIPTION", length = 4000, nullable = false)
-	@Size(min = 10, max = 4000, message = "{size}")
+	@Size(min = 4, max = 4000)
 	private String description;
 
 	@Column
 	@Digits(integer=6, fraction=2)
-
 	private BigDecimal price;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -104,6 +102,7 @@ public class Product {
 
 	// ********************** Common Methods ********************** //
 
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -120,6 +119,7 @@ public class Product {
 		return true;
 	}
 
+	@Override
 	public int hashCode() {
 		int result;
 		result = (name != null ? name.hashCode() : 0);
@@ -127,6 +127,7 @@ public class Product {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		return "Item ('" + getId() + "'), " + "Name: '" + getName() + "' " + "Initial Price: '" + getPrice()
 				+ "'";
