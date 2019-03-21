@@ -10,7 +10,9 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,7 @@ import edu.mum.batch.ProductBatch;
 import edu.mum.domain.Authority;
 import edu.mum.domain.Category;
 import edu.mum.domain.Order;
+import edu.mum.domain.OrderStats;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.main.TestUsers;
@@ -283,6 +286,17 @@ public class AdminServiceImpl {
 		for (Product item : items) {
 			System.out.println(item.toString());
 		}
+	}
+
+	public void sendOrder(ApplicationContext context) {
+
+		RabbitTemplate directTemplate = context.getBean("directTemplate", RabbitTemplate.class);
+		
+		OrderStats order = new OrderStats();
+		order.setTotalAmount(new BigDecimal(50));
+		
+		orderService.sendOrder(directTemplate, order);
+
 	}
 
 }

@@ -18,6 +18,7 @@
 	<import resource="classpath:context/batch-config.xml" />
 	<import resource="classpath:context/job-config.xml" />
 	<import resource="security-context.xml" />
+	<import resource="classpath:context/item-app-context.xml" />
 
 
 	<bean id="entityManagerFactory"

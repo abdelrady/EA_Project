@@ -78,7 +78,7 @@ public class Main {
 			}
 			
 			if(isAdmin)
-			admin.adminActions();
+			admin.adminActions(applicationContext);
 			else if(isCustomer)
 			{
 				//customer actions here

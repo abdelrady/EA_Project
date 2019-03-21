@@ -23,7 +23,10 @@
 hs_err_pid*
 
 # Specific folders
-Code/target/
-/Code/target/
-/RestService/SpringArrival_RestService
-/application.properties
+target/
+target/*/*
+application.properties
+*.lck
+*.class
+.vs/
+#hsqldb/

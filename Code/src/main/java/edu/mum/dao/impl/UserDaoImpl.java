@@ -27,5 +27,11 @@ public class UserDaoImpl extends GenericDaoImpl<User> implements UserDao {
 
 	}
 	
+	public User findByName(String userName) {
+	     
+		Query query = entityManager.createQuery("select u from User u  where u.userName =:name");
+		return (User) query.setParameter("name", userName).getSingleResult();
+
+	}
 
  }

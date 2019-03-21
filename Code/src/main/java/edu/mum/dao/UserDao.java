@@ -5,4 +5,5 @@ import edu.mum.domain.User;
 public interface UserDao extends GenericDao<User> {
       
 	public User findByEmail(String email);
+	public User findByName(String userName);
 }
