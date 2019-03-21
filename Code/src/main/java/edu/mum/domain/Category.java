@@ -17,7 +17,7 @@ public class Category implements Serializable {
 
 	
 	@Column(name = "CATEGORY_NAME", length = 255, nullable = false)
-	@Size(min = 4, max = 20, message = "{size}")
+	@Size(min = 4, max = 20)
 	private String name;
 
 	@ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })

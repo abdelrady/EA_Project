@@ -31,7 +31,6 @@ public class Admin {
 		while (key != -1) {
 			System.out.println("====================================");
 			System.out.println("Please write option no or -1 to exit");
-			System.out.println("[0] Initial Data");
 			System.out.println("[1] List All items");
 			System.out.println("[2] List All Users");
 			System.out.println("[3] List All Categories");
@@ -46,10 +45,6 @@ public class Admin {
 			Scanner sc = new Scanner(System.in);
 			key = sc.nextInt();
 			switch (key) {
-			case 0:
-
-				adminService.InitialData();
-				break;
 
 			case 1:
 
