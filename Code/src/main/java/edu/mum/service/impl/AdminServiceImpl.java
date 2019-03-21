@@ -50,7 +50,7 @@ public class AdminServiceImpl {
 
 	@Autowired
 	OrderService orderService;
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void addUser() {
 
 		User user = new User();
@@ -93,7 +93,7 @@ public class AdminServiceImpl {
 		}
 
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void listAllUser() {
 
 		List<User> users = userService.findAll();
@@ -102,7 +102,7 @@ public class AdminServiceImpl {
 		}
 
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void listAllCategories() {
 
 		List<Category> categories = categoryService.findAll();
@@ -202,7 +202,7 @@ public class AdminServiceImpl {
 			}
 		}
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void updateItemPrice() {
 
 		listAllItems();
@@ -228,7 +228,7 @@ public class AdminServiceImpl {
 			}
 		}
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void updateItemName() {
 
 		listAllItems();
@@ -256,7 +256,7 @@ public class AdminServiceImpl {
 			}
 		}
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void runBatch() {
 		try {
 			productBatch.startjob();
@@ -265,7 +265,7 @@ public class AdminServiceImpl {
 			e.printStackTrace();
 		}
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void listOrders() {
 		List<Order> orders = orderService.findAll();
 		System.out.println("Numbers of orders: " + orders.size());

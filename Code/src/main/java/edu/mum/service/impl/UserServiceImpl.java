@@ -75,11 +75,12 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
-	public void listItems() {
+	public List<Product> listItems() {
 		List<Product> items = itemService.findAll();
 		for (Product item : items) {
 			System.out.println(item.toString());
 		}
+		return items;
 
 	}
 
@@ -119,5 +120,4 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 		// TODO Auto-generated method stub
 
 	}
-
 }

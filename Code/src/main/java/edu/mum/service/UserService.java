@@ -14,7 +14,7 @@ public interface UserService {
 	public User update(User user);
 	public User testRefresh(User user);
 	
-	public void listItems();
+	public List<Product>  listItems();
 	public void addItemToCart(Product product,int quantity);
 	public void removeItemFromCart(int productIndex);
 	public void showCart();
