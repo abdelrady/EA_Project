@@ -10,6 +10,10 @@ import javax.persistence.*;
 @Entity
 public class Order {
 
+	public Order() {
+		totalPrice = new BigDecimal(0);
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ITEM_ID")

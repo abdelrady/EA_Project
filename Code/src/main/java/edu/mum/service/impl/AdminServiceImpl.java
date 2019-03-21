@@ -10,7 +10,9 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,7 @@ import edu.mum.batch.ProductBatch;
 import edu.mum.domain.Authority;
 import edu.mum.domain.Category;
 import edu.mum.domain.Order;
+import edu.mum.domain.OrderStats;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.main.TestUsers;
@@ -50,7 +53,7 @@ public class AdminServiceImpl {
 
 	@Autowired
 	OrderService orderService;
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void addUser() {
 
 		User user = new User();
@@ -93,7 +96,7 @@ public class AdminServiceImpl {
 		}
 
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void listAllUser() {
 
 		List<User> users = userService.findAll();
@@ -102,7 +105,7 @@ public class AdminServiceImpl {
 		}
 
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void listAllCategories() {
 
 		List<Category> categories = categoryService.findAll();
@@ -202,7 +205,7 @@ public class AdminServiceImpl {
 			}
 		}
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void updateItemPrice() {
 
 		listAllItems();
@@ -228,7 +231,7 @@ public class AdminServiceImpl {
 			}
 		}
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void updateItemName() {
 
 		listAllItems();
@@ -256,7 +259,7 @@ public class AdminServiceImpl {
 			}
 		}
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void runBatch() {
 		try {
 			productBatch.startjob();
@@ -265,7 +268,7 @@ public class AdminServiceImpl {
 			e.printStackTrace();
 		}
 	}
-
+	@PreAuthorize("hasAuthority('Admin')")
 	public void listOrders() {
 		List<Order> orders = orderService.findAll();
 		System.out.println("Numbers of orders: " + orders.size());
@@ -283,6 +286,17 @@ public class AdminServiceImpl {
 		for (Product item : items) {
 			System.out.println(item.toString());
 		}
+	}
+
+	public void sendOrder(ApplicationContext context) {
+
+		RabbitTemplate directTemplate = context.getBean("directTemplate", RabbitTemplate.class);
+		
+		OrderStats order = new OrderStats();
+		order.setTotalAmount(new BigDecimal(50));
+		
+		orderService.sendOrder(directTemplate, order);
+
 	}
 
 }

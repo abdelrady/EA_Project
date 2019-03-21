@@ -1,5 +1,7 @@
 package edu.mum.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 
 @Table(name="orders_items")
@@ -50,4 +52,8 @@ public class OrderItem {
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Order order;
 	
+	@Override
+	public String toString() {
+		return "Product: " + this.getProduct().getName() + ", Quantity: " + this.getQuantity() + " - Sub-Total: "+ this.getProduct().getPrice().multiply(new BigDecimal(this.quantity));
+	}
 }
