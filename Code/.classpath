@@ -28,6 +28,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/EH/Downloads/javamail1_4_5/javamail-1.4.5/mail.jar"/>
+	<classpathentry kind="lib" path="libs/mail.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
