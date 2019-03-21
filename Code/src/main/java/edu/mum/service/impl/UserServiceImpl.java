@@ -1,8 +1,11 @@
 package edu.mum.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,8 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.mum.dao.OrderDao;
 import edu.mum.dao.UserDao;
 import edu.mum.domain.Cart;
+import edu.mum.domain.Order;
 import edu.mum.domain.OrderItem;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
@@ -19,7 +24,7 @@ import edu.mum.service.CategoryService;
 import edu.mum.service.ItemService;
 
 @Service
-@Transactional 
+@Transactional
 public class UserServiceImpl implements edu.mum.service.UserService {
 
 	@Autowired
@@ -31,7 +36,9 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	@Autowired
 	CategoryService categoryService;
 
-	
+	@Autowired
+	OrderDao orderDao;
+
 	CartServiceImpl cartService;
 
 	@Override
@@ -96,24 +103,17 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	public void removeItemFromCart(int productIndex) {
 		// TODO Auto-generated method stub
 		Cart cart = CartServiceImpl.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
-		cart.removeItem(productIndex-1);
+		cart.removeItem(productIndex - 1);
+		// check
 	}
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
 	public void showCart() {
 		Cart cart = CartServiceImpl.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
-		Integer index=1;
-		for(OrderItem orderItem : cart.getOrderItems())
-		{
-			System.out.println(index.toString()+"-"+orderItem.toString());
+		Integer index = 1;
+		for (OrderItem orderItem : cart.getOrderItems()) {
+			System.out.println(index.toString() + "-" + orderItem.toString());
 			index++;
 		}
-	}
-
-	@Override
-	@PreAuthorize("hasAuthority('Customer')")
-	public void checkout() {
-		// TODO Auto-generated method stub
-
 	}
 }

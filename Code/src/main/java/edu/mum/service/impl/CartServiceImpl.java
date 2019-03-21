@@ -19,7 +19,10 @@ public class CartServiceImpl  {
 		if (usersCarts.containsKey(username)) {
 			return usersCarts.get(username);
 		} else {
-			return usersCarts.put(username, new Cart());
+			Cart cart=new Cart();
+			
+			 usersCarts.put(username, cart);
+			 return cart;
 		}
 	}
 }

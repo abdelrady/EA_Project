@@ -9,10 +9,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import edu.mum.domain.Product;
 import edu.mum.service.AuthService;
+import edu.mum.service.ItemService;
 import edu.mum.service.UserService;
 import edu.mum.service.impl.AdminServiceImpl;
 
@@ -39,6 +41,9 @@ public class Main {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	ItemService itemService;
+	
 	public static void main(String[] args) {
 
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("context/applicationContext.xml");
@@ -64,8 +69,8 @@ public class Main {
 		boolean isAdmin=false;
 		boolean isCustomer=false;
 		Authentication result=authService.Login(username,password);
-		// System.out.println("Successfully authenticated. Security context contains: " +
-	       //       SecurityContextHolder.getContext().getAuthentication());
+		 System.out.println("Successfully authenticated. Security context contains: " +
+	             SecurityContextHolder.getContext().getAuthentication().getName());
 		if(result!=null && result.isAuthenticated()==true)
 				{
 			for(GrantedAuthority a : result.getAuthorities())
@@ -78,10 +83,10 @@ public class Main {
 			}
 			
 			if(isAdmin)
-			admin.adminActions();
+			admin.adminActions(applicationContext);
 			else if(isCustomer)
 			{
-				//customer actions here
+				customerActions();
 			}
 				
 				}
@@ -101,6 +106,7 @@ public class Main {
 			System.out.println("[4] Remove product from cart");
 			System.out.println("[5] Checkout");
 			List<Product> products=new ArrayList<Product>();
+			products=itemService.findAll();
 			Scanner sc = new Scanner(System.in);
 			key = sc.nextInt();
 			switch (key) {
@@ -125,9 +131,15 @@ public class Main {
 				Product product=products.get(key-1);
 				userService.addItemToCart(product, quantity);
 				break;
-
+			case 4:
+				System.out.println("Enter product number");
+				 sc = new Scanner(System.in);
+				 key = sc.nextInt();
+				 product=products.get(key-1);
+				userService.removeItemFromCart(key-1);
+				break;
 			case 5:
-
+				
 
 				break;
 			default:

@@ -3,6 +3,7 @@ package edu.mum.main;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import edu.mum.service.CategoryService;
@@ -25,7 +26,7 @@ public class Admin {
 	@Autowired
 	AdminServiceImpl adminService;
 
-	public void adminActions() {
+	public void adminActions(ApplicationContext context) {
 
 		int key = 0;
 		while (key != -1) {
@@ -101,6 +102,10 @@ public class Admin {
 
 			case 11:// list Orders
 				adminService.listOrders();
+				break;
+
+			case 12:// checkout order mock
+				adminService.sendOrder(context);
 				break;
 
 			default:
