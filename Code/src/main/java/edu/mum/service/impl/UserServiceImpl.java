@@ -91,17 +91,13 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 		cart.addItem(product, quantity);
 		System.out.println("Item is added!");
 	}
-
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
 	public void removeItemFromCart(int productIndex) {
 		// TODO Auto-generated method stub
 		Cart cart = CartServiceImpl.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
 		cart.removeItem(productIndex-1);
-		//check
-
 	}
-
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
 	public void showCart() {
