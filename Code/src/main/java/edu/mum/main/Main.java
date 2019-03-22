@@ -19,16 +19,9 @@ import edu.mum.service.OrderService;
 import edu.mum.service.ProductService;
 import edu.mum.service.UserService;
 import edu.mum.service.impl.AdminServiceImpl;
-import edu.mum.service.impl.CartServiceImpl;
 
 @Component
 public class Main {
-
-	@Autowired
-	TestUsers testUsers;
-
-	@Autowired
-	TestItems testItems;
 
 	@Autowired
 	Admin admin;
