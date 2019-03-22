@@ -14,10 +14,12 @@ import org.springframework.stereotype.Component;
 
 import edu.mum.domain.Product;
 import edu.mum.service.AuthService;
+import edu.mum.service.CartService;
 import edu.mum.service.OrderService;
 import edu.mum.service.ProductService;
 import edu.mum.service.UserService;
 import edu.mum.service.impl.AdminServiceImpl;
+import edu.mum.service.impl.CartServiceImpl;
 
 @Component
 public class Main {
@@ -45,6 +47,9 @@ public class Main {
 
 	@Autowired
 	ProductService itemService;
+	
+	@Autowired
+	CartService cartService;
 
 	public static void main(String[] args) {
 
@@ -110,7 +115,7 @@ public class Main {
 				break;
 
 			case 2:
-				userService.showCart();
+				cartService.showCart();
 				break;
 
 			case 3:
@@ -124,14 +129,14 @@ public class Main {
 				quantity = sc.nextInt();
 
 				Product product = products.get(key - 1);
-				userService.addItemToCart(product, quantity);
+				cartService.addItemToCart(product, quantity);
 				break;
 			case 4:
 				System.out.println("Enter product number");
 				sc = new Scanner(System.in);
 				key = sc.nextInt();
 				product = products.get(key - 1);
-				userService.removeItemFromCart(key - 1);
+				cartService.removeItemFromCart(key - 1);
 				break;
 			case 5:
 				orderService.checkout(applicationContext);

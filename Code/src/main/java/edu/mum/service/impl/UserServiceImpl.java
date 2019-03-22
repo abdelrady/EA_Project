@@ -35,8 +35,7 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	@Autowired
 	OrderDao orderDao;
 
-	@Autowired
-	CartServiceImpl cartService;
+	
 
 	@Override
 	public void save(User user) {
@@ -88,21 +87,5 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 
 	}
 
-	@Override
-	@PreAuthorize("hasAuthority('Customer')")
-	public void addItemToCart(Product product, int quantity) {
-		cartService.addItemToCart(product, quantity);
-	}
-	@Override
-	@PreAuthorize("hasAuthority('Customer')")
-	public void removeItemFromCart(int productIndex) {
-		// TODO Auto-generated method stub
-		cartService.removeItemFromCart(productIndex);
-		// check
-	}
-	@Override
-	@PreAuthorize("hasAuthority('Customer')")
-	public void showCart() {
-		cartService.showCart();
-	}
+	
 }
