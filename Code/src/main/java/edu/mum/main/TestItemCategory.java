@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import edu.mum.domain.Product;
-import edu.mum.service.ItemService;
+import edu.mum.service.ProductService;
 
 @Component
 public class TestItemCategory {
 
 	@Autowired
-	ItemService itemService;
+	ProductService itemService;
 	
 	public void testItemCategory() {
 		String categoryName = "Sports";

@@ -15,6 +15,6 @@ public class SendEmail implements Tasklet {
  	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
  		// TODO Auto-generated method stub
 		emailService.sendResultNotificationMail("Thanh Tran", "hoaithanhht3@gmail.com", chunkContext);
- 		return null;
+ 		return RepeatStatus.FINISHED;
  	}
 }

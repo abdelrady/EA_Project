@@ -1,11 +1,8 @@
 package edu.mum.service.impl;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.mum.dao.OrderDao;
 import edu.mum.dao.UserDao;
 import edu.mum.domain.Cart;
-import edu.mum.domain.Order;
 import edu.mum.domain.OrderItem;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.service.CategoryService;
-import edu.mum.service.ItemService;
+import edu.mum.service.ProductService;
 
 @Service
 @Transactional
@@ -31,7 +27,7 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	private UserDao userDao;
 
 	@Autowired
-	ItemService itemService;
+	ProductService itemService;
 
 	@Autowired
 	CategoryService categoryService;

@@ -2,7 +2,6 @@ package edu.mum.service.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.mum.dao.OrderDao;
-import edu.mum.dao.ProductDao;
 import edu.mum.dao.UserDao;
-import edu.mum.domain.*;
+import edu.mum.domain.Cart;
+import edu.mum.domain.Order;
+import edu.mum.domain.OrderItem;
+import edu.mum.domain.OrderStats;
 import edu.mum.rest.service.OrderRestService;
-import edu.mum.service.ItemService;
 import edu.mum.service.OrderService;
 
 @Service
@@ -29,9 +29,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private UserDao userDao;
-
-	@Autowired
-	ItemService itemService;
 
 	@Autowired
 	OrderDao orderDao;

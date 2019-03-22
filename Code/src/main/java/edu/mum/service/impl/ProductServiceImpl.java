@@ -17,44 +17,43 @@ public class ProductServiceImpl implements ProductService {
 	
 	
  	@Autowired
-	private ProductDao productDao;
+	private ProductDao itemDao;
 
     @Override
 	public void save( Product Item) {  		
-		productDao.save(Item);
+		itemDao.save(Item);
 	}
 	
 	
     @Override
 	public Product update( Product Item) {  		
-		return productDao.update(Item);
+		return itemDao.update(Item);
 	}
-	
 	
 	@Override
 	public List<Product> findAll() {
-		return productDao.findAll();
+		return itemDao.findAll();
 	}
 
  	@Override
 	public Product findOne(Long id) {
-		return productDao.findOne(id);
+		return itemDao.findOne(id);
 	}
 
 
 	@Override
 	public List<Product> findBySellerOrBuyer(Integer price, User buyer, User seller) {
 		 
-		return productDao.findBySellerOrBuyer(price, buyer, seller);
+		return itemDao.findBySellerOrBuyer(price, buyer, seller);
 	}
 
 	@Override
 	public List<Product> findByCategoryName(String categoryName) {
-		return productDao.findByCategoryName(categoryName);
+		return itemDao.findByCategoryName(categoryName);
 	}
 	
 	@Override
 	public List<Product> findItemCriteria(Integer initialPrice, User buyer, User seller) {
-		return productDao.findItemCriteria(initialPrice,buyer,seller);
+		return itemDao.findItemCriteria(initialPrice,buyer,seller);
 	}
 }

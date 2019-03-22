@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
-import edu.mum.service.ItemService;
+import edu.mum.service.ProductService;
 import edu.mum.service.UserService;
 
 @Component
 public class TestFindItemsBySellOrBuy{
 
 	@Autowired
-	ItemService itemService;
+	ProductService itemService;
 	
  	@Autowired
 	UserService userService;	
