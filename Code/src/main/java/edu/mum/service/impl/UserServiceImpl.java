@@ -35,6 +35,7 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	@Autowired
 	OrderDao orderDao;
 
+	@Autowired
 	CartServiceImpl cartService;
 
 	@Override
@@ -90,26 +91,18 @@ public class UserServiceImpl implements edu.mum.service.UserService {
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
 	public void addItemToCart(Product product, int quantity) {
-		Cart cart = CartServiceImpl.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
-		cart.addItem(product, quantity);
-		System.out.println("Item is added!");
+		cartService.addItemToCart(product, quantity);
 	}
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
 	public void removeItemFromCart(int productIndex) {
 		// TODO Auto-generated method stub
-		Cart cart = CartServiceImpl.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
-		cart.removeItem(productIndex - 1);
+		cartService.removeItemFromCart(productIndex);
 		// check
 	}
 	@Override
 	@PreAuthorize("hasAuthority('Customer')")
 	public void showCart() {
-		Cart cart = CartServiceImpl.getUserCart(SecurityContextHolder.getContext().getAuthentication().getName());
-		Integer index = 1;
-		for (OrderItem orderItem : cart.getOrderItems()) {
-			System.out.println(index.toString() + "-" + orderItem.toString());
-			index++;
-		}
+		cartService.showCart();
 	}
 }
