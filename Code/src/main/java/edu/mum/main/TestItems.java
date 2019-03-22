@@ -9,14 +9,14 @@ import edu.mum.domain.Category;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
 import edu.mum.service.CategoryService;
-import edu.mum.service.ItemService;
+import edu.mum.service.ProductService;
 import edu.mum.service.UserService;
 
 @Component
 public class TestItems {
 
 	@Autowired
-	ItemService itemService;
+	ProductService itemService;
 
 	@Autowired
 	UserService userService;

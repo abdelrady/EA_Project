@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import edu.mum.service.CategoryService;
-import edu.mum.service.ItemService;
+import edu.mum.service.ProductService;
 import edu.mum.service.UserService;
 import edu.mum.service.impl.AdminServiceImpl;
 
@@ -15,7 +15,7 @@ import edu.mum.service.impl.AdminServiceImpl;
 public class Admin {
 
 	@Autowired
-	ItemService itemService;
+	ProductService itemService;
 
 	@Autowired
 	UserService userService;

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import edu.mum.domain.Product;
 import edu.mum.service.AuthService;
 import edu.mum.service.OrderService;
-import edu.mum.service.ItemService;
+import edu.mum.service.ProductService;
 import edu.mum.service.UserService;
 import edu.mum.service.impl.AdminServiceImpl;
 
@@ -44,7 +44,7 @@ public class Main {
 	OrderService orderService;
 
 	@Autowired
-	ItemService itemService;
+	ProductService itemService;
 
 	public static void main(String[] args) {
 

@@ -26,7 +26,7 @@ import edu.mum.domain.User;
 import edu.mum.main.TestUsers;
 import edu.mum.service.AuthService;
 import edu.mum.service.CategoryService;
-import edu.mum.service.ItemService;
+import edu.mum.service.ProductService;
 import edu.mum.service.OrderService;
 import edu.mum.service.UserService;
 
@@ -34,7 +34,7 @@ import edu.mum.service.UserService;
 public class AdminServiceImpl {
 
 	@Autowired
-	ItemService itemService;
+	ProductService itemService;
 
 	@Autowired
 	UserService userService;

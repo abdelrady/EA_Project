@@ -12,18 +12,18 @@ import edu.mum.service.ProductService;
  */
 public class ProductItemWriter implements ItemWriter<Product>   {
 
- 	private ProductService productService;
+ 	private ProductService itemService;
 
 	@Override
 	public void write(List<? extends Product> products) throws Exception {
 		for (Product product : products) {
- 			productService.save(product);
+			itemService.save(product);
 		}
 	}
 
 	// Injected in batch-config.xml
 	public void setProductService(ProductService productService) {
-		this.productService = productService;
+		this.itemService = productService;
 	}
 
 }
