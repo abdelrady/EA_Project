@@ -12,31 +12,37 @@ SpringArrivalMain couldn't drop and create tables for that schema.
 Start SpringArrival_RestService App.
 	1. Run As - Run on Server
 
-Begin to test: 
-	2. Login with user: admin account or customer account
-		2.1 admin account: admin/admin
-		2.2 customer account:Asaid/password		
-	3. Depend on user that logins, corresponding allowed commands are shown and user can proceed with them.
+Scenarios: 
+Console Application
+	1. Login and AUTHENTICATION	scenario
+	   Valid Credential to Login: admin account:admin/admin or customer account: Asaid/password
+		
+	2. Use cases for admin account: admin/admin and can input one of these options below: 
+			[1] List All items - End-user will browse products catalog
+			[2] List All Users
+			[3] List All Categories
+			[4] Add user: to verify VALIDATION
+			[5] Add Category: to verify VALIDATION 
+			[6] Update Category Name
+			[7] Add Item: to verify VALIDATION 
+			[8] Update Item Price
+			[9] Update Item Name
+			[10] Import Product from CSV file: BATCH process to integrate products data from csv files and send notification EMAIL
+			[11] List orders: call REST service to retrieve data
+	3. Use cases for admin account: Asaid/password and can input one of these options below:
+			[1] List all products
+			[2] Show cart
+			[3] Add product to cart
+			[4] Remove product from cart
+			[5] Checkout order
+				- New order is generated and persisted		
+				- AMQP producer send order summary to direct exchange 
+				- Check SpringArrivalConsumer application to verify received order summary
+	4. When exception happens: example when data is failed in VALIDATION case, 
+		stacktrace will be logged to SpringArrival.log located in root folder of project SpringArrivalMain.
 
-Integration flow
-	Console Application
-		1- End-user will browse products catalog
-		   Login and authentication	
-		2- User add items to cart
-		3- User Removes Item from Cart
-		4- User Show cart 		
-		5- User checkout items		
-		6- New order is generated and persisted		
-		7- AMQP producer send order summary to direct exchange 
-                8- Admin add users
-		9- Admin adds products
-		10- Admin add categories
-	        11- Admin list orders
-		12- Admin update order status
-		13- Batch process to integrate products data from csv files and send notifications
-	
-	SpringArrivalConsumer Application		
-		14- Listener receive order summary, print order summary and send confirmation email
+SpringArrivalConsumer Application		
+	- Listener receive order summary, print order summary and send confirmation EMAIL
 
-	Rest Service
-		15-Lists order and update order operations for admin
+Rest Service
+		-Lists order from DB
