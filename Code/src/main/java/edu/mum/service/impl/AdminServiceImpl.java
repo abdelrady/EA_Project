@@ -23,11 +23,10 @@ import edu.mum.domain.Order;
 import edu.mum.domain.OrderStats;
 import edu.mum.domain.Product;
 import edu.mum.domain.User;
-import edu.mum.main.TestUsers;
 import edu.mum.service.AuthService;
 import edu.mum.service.CategoryService;
-import edu.mum.service.ProductService;
 import edu.mum.service.OrderService;
+import edu.mum.service.ProductService;
 import edu.mum.service.UserService;
 
 @Component
@@ -44,9 +43,6 @@ public class AdminServiceImpl {
 
 	@Autowired
 	CategoryService categoryService;
-
-	@Autowired
-	TestUsers testUsers;
 
 	@Autowired
 	ProductBatch productBatch;

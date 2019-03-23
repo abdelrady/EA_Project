@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import edu.mum.domain.Cart;
 import edu.mum.domain.OrderItem;
 import edu.mum.domain.Product;
 import edu.mum.service.CartService;
 
+@Service
 public class CartServiceImpl implements CartService {
 	private static Map<String, Cart> usersCarts = new HashMap<>();
 
